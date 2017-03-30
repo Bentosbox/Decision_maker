@@ -135,8 +135,10 @@ $(() => {
 
       //SERVER - Assign decision_id FK on the server side
 
-    // --- CALL AJAX function by PASSING it Decision Object when user hits the SUBMIT button
+    // --- CALL AJAX function by PASSING it Decision Object when user hits the SUBMIT button (AJAX is Optional SO SERVER CAN TAKE DATA DIRECTLY FROM HTML file)
 
+      //SERVER - Creates Admin URL and sends email to admin with URL link
+      //SERVER - Creates multiple Voter URL's and sends emails to voters with URL link
       //SERVER - Redirects to the vote status poll page
 
 
@@ -157,8 +159,9 @@ $(() => {
 
   // WHEN SUBMIT BUTTON is CLICKED
 
-    // ---- Ranking for vote options gets sent to server
+    // ---- Ranking for vote options gets sent to server (Need to implement the Borda Count Method)
     // ---- Server gets the decision_id and option_id using the URL string
+    // ---- Server redirects if the Voter URL is accessed again to the Admin URL
 
 // ----- VOTE STATUS PAGE
 
