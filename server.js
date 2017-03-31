@@ -44,7 +44,6 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 
 
-
 //////////////// GET PAGES ///////////////
 
 app.get("/", (req, res) => {
@@ -67,6 +66,7 @@ app.get("/polls/:id", (req, res) => {
 /////////////POST REQUESTS//////////////////
 
 app.post('/polls', (req, res) => {
+  console.log(req.body);
   let email_subject = req.body[""];
   let email_text = req.body[""];
   let email_admin = req.body[""];
@@ -84,25 +84,45 @@ app.post('/polls', (req, res) => {
 
 
   //////INSERT INTO DECISIONS TABLE///////
+  // knex('decisions')
+  //   .insert({title: email_subject, time: req.body[""], message: email_text, admin_email: email_admin, admin_name: req.body[""], admin_url: admin_url})
+  //   .returning('id')
+  //   .then(function(decisionId) {
+  //     knex('voters')
+  //       .insert({email: , name: req.body[""], url: voter_url , decision_id: decisionId[0]})
+  //       console.log(decisionId)
+  //       .returning('id')
+  //   });
+  //       .then(function(voterId) {
+  //         knex('options')
+  //         console.log(voterId)
+  //           .insert({title: req.body[""] description: req.body[""], decision_id: decisionId[0], total_rank: 0})
+  //       });
+  //           .then(function(optionId) {
+  //             knex('polls')
+  //             console.log(optionId)
+  //               .insert({voter_id: voterId[0], option_id: optionId[0], base_rank: 0})
+  //           });
+
+////////////////WORKING TEMPLATE/////////////////////////
+
   knex('decisions')
-    .insert({title: email_subject, time: req.body[""], message: email_text, admin_email: email_admin, admin_name: req.body[""], admin_url: admin_url})
     .returning('id')
-    .then(function(decisionId) {
-      knex('voters')
-        .insert({email: , name: req.body[""], url: voter_url , decision_id: decisionId[0]})
-        console.log(decisionId)
-        returning('id')
-    });
-        .then(function(voterId) {
-          knex('options')
-          console.log(voterId)
-            .insert({title: req.body[""] description: req.body[""], decision_id: decisionId[0], total_rank: 0})
-        });
-            .then(function(optionId) {
-              knex('polls')
-              console.log(optionId)
-                .insert({voter_id: decisionId[0], voter_id: voterId[0], base_rank: 0})
-            });
+    .insert({title: email_subject, time: req.body[""], message: email_text, admin_email: email_admin, admin_name: req.body[""], admin_url: url_admin})
+    .then(function([decisionId]) {
+      return Promise.all([
+        knex('voters')
+          .returning('id')
+          .insert({voter_email: req.body[""], voter_name: req.body[""], voter_url: url_voter, decision_id: decisionId}),
+        knex('options')
+          .returning('id')
+          .insert({title: req.body[""], description: req.body[""], decision_id: decisionId, total_rank: 0})
+      ]);
+    })
+    .then(function([[voterId], [optionId]]) {
+      return knex('polls')
+      .insert({voter_id: voterId, option_id: optionId, base_rank: 0})
+    }).finally(knex.destroy)
 
 
   //////INSERT INTO VOTERS TABLE//////////
@@ -165,9 +185,11 @@ app.post('/polls', (req, res) => {
 //     }
 // }
 
+});
+
 
 app.post('/polls/:id', (req, res) => {
-}
+})
 
 /////////////////FUNCTIONS//////////////////
 
