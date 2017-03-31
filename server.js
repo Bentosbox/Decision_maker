@@ -64,7 +64,6 @@ app.get("/polls/:id", (req, res) => {
 });
 
 
-
 /////////////POST REQUESTS//////////////////
 
 app.post('/polls', (req, res) => {
@@ -91,14 +90,17 @@ app.post('/polls', (req, res) => {
     .then(function(decisionId) {
       knex('voters')
         .insert({email: , name: req.body[""], url: voter_url , decision_id: decisionId[0]})
+        console.log(decisionId)
         returning('id')
     });
         .then(function(voterId) {
           knex('options')
+          console.log(voterId)
             .insert({title: req.body[""] description: req.body[""], decision_id: decisionId[0], total_rank: 0})
         });
             .then(function(optionId) {
               knex('polls')
+              console.log(optionId)
                 .insert({voter_id: decisionId[0], voter_id: voterId[0], base_rank: 0})
             });
 
@@ -140,28 +142,28 @@ app.post('/polls', (req, res) => {
 
   ///VOTER EMAIL///
 
-    var voterEmail = {
-      from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
-      to: voters.email
-      subject: email_subject
-      text: email_text, url_voter
-    }
-    mailgun.messages().send(voterEmail, function (error, body) {
-      console.log(body);
-    }
+    // var voterEmail = {
+    //   from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+    //   to: voters.email
+    //   subject: email_subject
+    //   text: email_text, url_voter
+    // }
+    // mailgun.messages().send(voterEmail, function (error, body) {
+    //   console.log(body);
+    // }
 
   // /ADMIN EMAIL///
 
-  var adminEmail = {
-      from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
-      to: decisions.admin_email
-      subject: email_subject
-      text: 'Thank you for using Decision Maker. Your administration and user link are as follows: ', url_admin, url_voter
-    }
-    mailgun.messages().send(adminEmail, function (error, body) {
-      console.log(body);
-    }
-}
+//   var adminEmail = {
+//       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+//       to: decisions.admin_email
+//       subject: email_subject
+//       text: 'Thank you for using Decision Maker. Your administration and user link are as follows: ', url_admin, url_voter
+//     }
+//     mailgun.messages().send(adminEmail, function (error, body) {
+//       console.log(body);
+//     }
+// }
 
 
 app.post('/polls/:id', (req, res) => {
