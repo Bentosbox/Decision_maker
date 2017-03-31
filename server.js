@@ -85,35 +85,40 @@ app.post('/polls', (req, res) => {
 
 
   //////INSERT INTO DECISIONS TABLE///////
-
   knex('decisions')
     .insert({title: email_subject, time: req.body[""], message: email_text, admin_email: email_admin, admin_name: req.body[""], admin_url: admin_url})
     .returning('id')
     .then(function(decisionId) {
-      // callback(decisionId[0]);
       knex('voters')
         .insert({email: , name: req.body[""], url: voter_url , decision_id: decisionId[0]})
-        .then(function(result) {
-      });
+        returning('id')
     });
+        .then(function(voterId) {
+          knex('options')
+            .insert({title: req.body[""] description: req.body[""], decision_id: decisionId[0], total_rank: 0})
+        });
+            .then(function(optionId) {
+              knex('polls')
+                .insert({voter_id: decisionId[0], voter_id: voterId[0], base_rank: 0})
+            });
 
 
   //////INSERT INTO VOTERS TABLE//////////
 
-  knex('voters')
-    .insert({email: , name: req.body[""], url: voter_url , decision_id: })
-    .then(function(result) {
-    });
+  // knex('voters')
+  //   .insert({email: , name: req.body[""], url: voter_url , decision_id: })
+  //   .then(function(result) {
+  //   });
 
   //////INSERT INTO OPTIONS TABLE//////////
 
-  knex('options')
-    .insert({title: req.body[""] description: req.body[""], decision_id: decisionId, total_rank:})
-    .then(function(result) {
-    });
+  // knex('options')
+  //   .insert({title: req.body[""] description: req.body[""], decision_id: decisionId, total_rank:})
+  //   .then(function(result) {
+  //   });
 
-  knex('polls')
-    .insert({voter_id: decisionId, voter_id: , base_rank:})
+  // knex('polls')
+  //   .insert({voter_id: decisionId, voter_id: , base_rank:})
 
 
   ///////// PLACEHOLDER FOR FULL MAILGUN RUN FUNCTION
