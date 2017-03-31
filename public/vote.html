@@ -61,17 +61,17 @@
         <h2>List of options</h2>
       </div>
     </div>
+
+    <!-- Div elements that will be rendered and appended dynamically -->
     <div class="row">
       <div class="col-lg-4">
         <div class="bs-example">
-          <ul class="list-group">
-            <li class="list-group-item option-title-display"> <span class="badge option-description-display">Best Ramen in town</span> Cras justo odio </li>
-            <li class="list-group-item option-title-display"> <span class="badge option-description-display">2</span> Dapibus ac facilisis in </li>
-            <li class="list-group-item option-title-display"> <span class="badge option-description-display">1</span> Morbi leo risus </li>
+          <ul id="sortable"> <!-- TELL ELLEN THAT THIS CLASS IS NEEDED for the UL-->
           </ul>
         </div>
       </div>
     </div>
+
     <div class="col-lg-6">
           <p>
             <button type="button" class="btn btn-default btn-lg btn-block submit-vote-button">Submit</button>
@@ -93,6 +93,9 @@
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="scripts/bootstrap.min.js"></script>
 <script src="scripts/respond.min.js"></script>
-<script src="scripts/holder.js"></script>
+<!-- <script src="scripts/holder.js"></script> -->
+<script src="scripts/poll-vote.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>  <!-- TELL ELLEN THAT THIS SCRIPT TAG is NEEDED-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!-- TELL ELLEN THAT THIS SCRIPT TAG is NEEDED-->
 </body>
 </html>
