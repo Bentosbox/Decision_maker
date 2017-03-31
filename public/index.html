@@ -33,73 +33,84 @@
               <div class="form-group">
                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="inputEmail" placeholder="Please enter your mail">
+                  <input type="text" class="form-control decision-admin-email" id="inputEmail" placeholder="Please enter your mail">
                 </div>
               </div>
               <div class="form-group">
                 <label for="ownerName" class="col-lg-2 control-label">Name (optional)</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="ownerName" placeholder="First Name">
+                  <input type="text" class="form-control decision-admin-name" id="ownerName" placeholder="First Name">
                 </div>
               </div>
               <div class="form-group">
                 <label for="pollSubject" class="col-lg-2 control-label">Subject</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="pollSubject" placeholder="What is this poll for?">
+                  <input type="text" class="form-control decision-title" id="pollSubject" placeholder="What is this poll for?">
                 </div>
               </div>
+              <!-- Date / time picker options -->
               <div class="form-group">
-                <label for="pollPeriod" class="col-lg-2 control-label">Period</label>
+                <label for="decision-time" class="col-lg-2 control-label">End Time</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="pollPeriod" placeholder="minutes">
+                <input type="text" class="form-control decision-time" id="datetimepicker"/>
                 </div>
               </div>
+
               <!-- input options -->
               <legend>Please enter all the options</legend>
+
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="inputDefault">Option 1</label>
+                <label class="col-lg-2 control-label" for="inputDefault">Option</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control option-title" placeholder= "Enter your option here">
+                  <input type="text" class="form-control option-title" placeholder= "description(optional)">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-lg-2 control-label" for="inputDefault">Option</label>
                 <div class="col-lg-10">
                   <input type="text" class="form-control" placeholder= "Enter your option here">
                   <input type="text" class="form-control" placeholder= "description(optional)">
+                  <span class="option-title-validation"></span>
+                  <span class="option-description-validation"></span>
                 </div>
               </div>
+
               <div class="addition-option">
-                <div class="form-group">
-                  <label class="col-lg-2 control-label" for="inputDefault">Option 2</label>
-                  <div class="col-lg-10">
-                    <input type="text" class="form-control" placeholder= "Enter your option here">
-                    <input type="text" class="form-control" placeholder= "description(optional)">
-                  </div>
-                </div>
               </div>
 
               <div class="form-group">
                 <div class="col-lg-6">
                   <div class="more_button">
-                      <button type="button" class="btn tn btn-primary btn-add-option">Need more options?</button>
+                      <button type="button" class="btn tn btn-primary add-option-button">Need more options?</button>
                   </div>
                 </div>
               </div>
 
+
+
               <!-- input voter email -->
               <legend>Who you want to invite to this vote?</legend>
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="voterEmail">Voter 1</label>
+                <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" placeholder= "Enter voter's email">
+                  <input type="text" class="form-control voter-email" placeholder= "Enter voter's email">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control voter-email" placeholder= "Enter voter's email">
+                  <span class="voter-email-validation"></span>
                 </div>
               </div>
               <div class="addition-voter">
-                <div class="form-group">
-                  <label class="col-lg-2 control-label" for="voterEmail">Voter 2</label>
-                  <div class="col-lg-10">
-                    <input type="text" class="form-control" placeholder= "Enter voter's email">
-                  </div>
-                </div>
               </div>
               <div class="form-group">
                 <div class="col-lg-10">
-                  <button type="button" class="btn tn btn-primary btn-add-voter">invite more</button>
+                  <button type="button" class="btn tn btn-primary add-voter-button">invite more</button>
                 </div>
               </div>
 
@@ -107,18 +118,14 @@
               <div class="form-group">
                 <label for="textArea" class="col-lg-2 control-label">Message (optional)</label>
                 <div class="col-lg-10">
-                  <textarea class="form-control" rows="3" id="textArea"></textarea>
+                  <textarea class="form-control decision-message" rows="3" id="textArea"></textarea>
                   <span class="help-block">Any thing you might want to inculde in the email that send to voters</span> </div>
               </div>
               <div class="form-group">
-                <!-- <div class="col-lg-10 col-lg-offset-2">
-                  <button class="btn btn-default">Cancel</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div> -->
                 <div class="col-lg-6">
                       <p>
-                        <button type="button" class="btn btn-default btn-lg btn-block">Submit</button>
-                        <button type="button" class="btn btn-warning btn-lg btn-block">Cancel</button>
+                        <button type="button" class="btn btn-default btn-lg btn-block submit-poll-button">Submit</button>
+                        <button type="button" class="btn btn-warning btn-lg btn-block cancel-poll-button">Cancel</button>
                       </p>
                 </div>
               </div>
