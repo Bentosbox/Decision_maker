@@ -46,15 +46,15 @@ app.use("/api/users", usersRoutes(knex));
 
 //////////////// GET PAGES ///////////////
 
-app.get("/", (req, res) => {
-  res.redirect("/polls");
-});
+// app.get("/", (req, res) => {
+//   res.redirect("/polls");
+// });
 
 app.get("/polls", (req, res) => {
   res.status(200).render("index")
 });
 
-app.get("/polls/admin/:id", (req, res) => {
+app.get("/polls/result/:id", (req, res) => {
   res.status(200).render("result")
 });
 
@@ -67,49 +67,32 @@ app.get("/polls/:id", (req, res) => {
 
 app.post('/polls', (req, res) => {
   console.log(req.body);
-  let email_subject = req.body[""];
+  /////Decision Table///////
+  let email_subject = req.body["pollSubject"];
   let email_text = req.body[""];
-  let email_admin = req.body[""];
+  let email_admin = req.body["inputEmail"];
   /// may need for each to loop thorugh each voter///
   let email_voter = req.body[""];
-  let time = req.body[""];
+  let time = req.body["decision-time"];
+  //options
   let admin_url = generateRandomString();
   let voter_url = generateRandomString();
   let url_voter = 'localhost8080:' + voters.url
-  let url_admin = 'localhost8080:' + decisions.admin_url
+    let url_admin = 'localhost8080:' + decisions.admin_url
 
   /////////GENERATE RANDOM STRING
 
     //////////////// INSERT INFORMATION INTO TABLES ///////////////////
-
-
-  //////INSERT INTO DECISIONS TABLE///////
-  // knex('decisions')
-  //   .insert({title: email_subject, time: req.body[""], message: email_text, admin_email: email_admin, admin_name: req.body[""], admin_url: admin_url})
-  //   .returning('id')
-  //   .then(function(decisionId) {
-  //     knex('voters')
-  //       .insert({email: , name: req.body[""], url: voter_url , decision_id: decisionId[0]})
-  //       console.log(decisionId)
-  //       .returning('id')
-  //   });
-  //       .then(function(voterId) {
-  //         knex('options')
-  //         console.log(voterId)
-  //           .insert({title: req.body[""] description: req.body[""], decision_id: decisionId[0], total_rank: 0})
-  //       });
-  //           .then(function(optionId) {
-  //             knex('polls')
-  //             console.log(optionId)
-  //               .insert({voter_id: voterId[0], option_id: optionId[0], base_rank: 0})
-  //           });
-
 ////////////////WORKING TEMPLATE/////////////////////////
+
+  // for (let email in email_voter)
+  // for (let option in )
 
   knex('decisions')
     .returning('id')
     .insert({title: email_subject, time: req.body[""], message: email_text, admin_email: email_admin, admin_name: req.body[""], admin_url: url_admin})
     .then(function([decisionId]) {
+        /////Loop through from here for every voter and option available.
       return Promise.all([
         knex('voters')
           .returning('id')
@@ -122,29 +105,13 @@ app.post('/polls', (req, res) => {
     .then(function([[voterId], [optionId]]) {
       return knex('polls')
       .insert({voter_id: voterId, option_id: optionId, base_rank: 0})
+      /////Also insert into polls table for each and ends here.
     }).finally(knex.destroy)
-
-
-  //////INSERT INTO VOTERS TABLE//////////
-
-  // knex('voters')
-  //   .insert({email: , name: req.body[""], url: voter_url , decision_id: })
-  //   .then(function(result) {
-  //   });
-
-  //////INSERT INTO OPTIONS TABLE//////////
-
-  // knex('options')
-  //   .insert({title: req.body[""] description: req.body[""], decision_id: decisionId, total_rank:})
-  //   .then(function(result) {
-  //   });
-
-  // knex('polls')
-  //   .insert({voter_id: decisionId, voter_id: , base_rank:})
 
 
   ///////// PLACEHOLDER FOR FULL MAILGUN RUN FUNCTION
     //////////PlaceHolder For Email Function////////////
+
   function sendEmail() {
     var data = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
@@ -158,7 +125,6 @@ app.post('/polls', (req, res) => {
   }
   sendEmail();
   //////////////////////////////////////////////////////
-
 
   ///VOTER EMAIL///
 
@@ -184,12 +150,13 @@ app.post('/polls', (req, res) => {
 //       console.log(body);
 //     }
 // }
-
 });
+
 
 
 app.post('/polls/:id', (req, res) => {
 })
+
 
 /////////////////FUNCTIONS//////////////////
 

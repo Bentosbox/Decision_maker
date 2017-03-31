@@ -15,29 +15,9 @@
   <p>This is a decision maker to help a group to decide things.</p>
   </div>
 </div>
-
-
 <div class="container">
   <div class="bs-docs-section">
     <div class="row">
-      <!--  alert -->
-        <!-- <div class="col-lg-4">
-          <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again. </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again. </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again. </div>
-        </div> -->
-        <!-- end of alert  -->
-
       <div class="col-lg-12">
         <div class="page-header">
           <h1 id="forms">Create your new poll</h1>
@@ -47,109 +27,106 @@
     <div class="row">
       <div class="col-lg-6">
         <div class="well">
-          <form class="bs-example form-horizontal">
+          <form class="bs-example form-horizontal" action="/polls" method="POST">
             <fieldset>
               <legend>Please enter your basic infomation</legend>
               <div class="form-group">
-                <label for="inputEmail" class="col-lg-2 control-label">Your email</label>
+                <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                  <input type="text" class="form-control decision-admin-email" id="inputEmail" placeholder="Please enter your mail">
                 </div>
               </div>
               <div class="form-group">
-                <label for="ownerName" class="col-lg-2 control-label">Your Name (optional)</label>
+                <label for="ownerName" class="col-lg-2 control-label">Name (optional)</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="ownerName" placeholder="First Name">
+                  <input type="text" class="form-control decision-admin-name" id="ownerName" placeholder="First Name">
                 </div>
               </div>
               <div class="form-group">
                 <label for="pollSubject" class="col-lg-2 control-label">Subject</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="pollSubject" placeholder="What is this poll for?">
+                  <input type="text" class="form-control decision-title" id="pollSubject" placeholder="What is this poll for?">
                 </div>
               </div>
+              <!-- Date / time picker options -->
               <div class="form-group">
-                <label for="pollLength" class="col-lg-2 control-label">How long is this poll least?</label>
+                <label for="decision-time" class="col-lg-2 control-label">End Time</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" id="pollLength" placeholder="please enter minutes">
+                <input type="text" class="form-control decision-time" id="datetimepicker"/>
                 </div>
               </div>
+
               <!-- input options -->
               <legend>Please enter all the options</legend>
+
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="inputDefault">Option 1</label>
+                <label class="col-lg-2 control-label" for="inputDefault">Option</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control option-title" placeholder= "Enter your option here">
+                  <input type="text" class="form-control option-title" placeholder= "description(optional)">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-lg-2 control-label" for="inputDefault">Option</label>
                 <div class="col-lg-10">
                   <input type="text" class="form-control" placeholder= "Enter your option here">
                   <input type="text" class="form-control" placeholder= "description(optional)">
+                  <span class="option-title-validation"></span>
+                  <span class="option-description-validation"></span>
                 </div>
               </div>
+
+              <div class="addition-option">
+              </div>
+
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="inputDefault">Option 2</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control" placeholder= "Enter your option here">
-                  <input type="text" class="form-control" placeholder= "description(optional)">
+                <div class="col-lg-6">
+                  <div class="more_button">
+                      <button type="button" class="btn tn btn-primary add-option-button">Need more options?</button>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-lg-2 control-label" for="inputDefault">Option 3</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control" placeholder= "Enter your option here">
-                  <input type="text" class="form-control" placeholder= "description(optional)">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-lg-2 control-label" for="inputOptions">Option 4</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control" placeholder= "Enter your option here">
-                  <input type="text" class="form-control" placeholder= "description(optional)">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-lg-10">
-                  <button type="button" class="btn btn-primary">Need more options?</button>
-                </div>
-              </div>
+
+
 
               <!-- input voter email -->
               <legend>Who you want to invite to this vote?</legend>
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="voterEmail">Voter 1</label>
+                <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control" placeholder= "Enter voter's email">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-lg-2 control-label" for="voterEmail">Voter 2</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control" placeholder= "Enter voter's email">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-lg-2 control-label" for="voterEmail">Voter 3</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control" placeholder= "Enter voter's email">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-lg-10">
-                  <button type="button" class="btn btn-primary">invite more</button>
+                  <input type="text" class="form-control voter-email" placeholder= "Enter voter's email">
                 </div>
               </div>
 
-
-
+              <div class="form-group">
+                <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
+                <div class="col-lg-10">
+                  <input type="text" class="form-control voter-email" placeholder= "Enter voter's email">
+                  <span class="voter-email-validation"></span>
+                </div>
+              </div>
+              <div class="addition-voter">
+              </div>
+              <div class="form-group">
+                <div class="col-lg-10">
+                  <button type="button" class="btn tn btn-primary add-voter-button">invite more</button>
+                </div>
+              </div>
 
               <!-- input message to voter -->
               <div class="form-group">
                 <label for="textArea" class="col-lg-2 control-label">Message (optional)</label>
                 <div class="col-lg-10">
-                  <textarea class="form-control" rows="3" id="textArea"></textarea>
+                  <textarea class="form-control decision-message" rows="3" id="textArea"></textarea>
                   <span class="help-block">Any thing you might want to inculde in the email that send to voters</span> </div>
               </div>
               <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                  <button class="btn btn-default">Cancel</button>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-lg-6">
+                      <p>
+                        <button type="button" class="btn btn-default btn-lg btn-block submit-poll-button">Submit</button>
+                        <button type="button" class="btn btn-warning btn-lg btn-block cancel-poll-button">Cancel</button>
+                      </p>
                 </div>
               </div>
             </fieldset>
@@ -172,5 +149,6 @@
 <script src="scripts/bootstrap.min.js"></script>
 <script src="scripts/respond.min.js"></script>
 <script src="scripts/holder.js"></script>
+<script src="scripts/addMore.js"></script>
 </body>
 </html>
