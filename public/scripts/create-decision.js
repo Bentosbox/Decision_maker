@@ -111,24 +111,28 @@ $(() => {
 
   $('.add-option-button').on('.click', function (event) {
     //Speak to Ellen to make CSS classess consistent. All Options need a container class that can be used for appending.
+    //Needs to have logic to restrict to a max of 6 options
   });
 
 //CREATE DECISION FORM - ON ADD VOTER Button Click Function
 
   $('.add-voter-button').on('.click', function (event) {
     //Speak to Ellen to make CSS classess consistent. All Voters need a container class that can be used for appending.
+    //Needs to have logic to restrict to a max of 10 voters
   });
 
 //CREATE DECISON FORM - ON DELETE OPTION Button Click Function
 
   $('.delete-option-button').on('.click', function (event) {
     //Speak to Ellen to make CSS classess consistent. All Options need a container class that can be used for appending.
+    //Need logic built in so delete button appears only if there are more than 2 options on the page
   });
 
 //CREATE DECISON FORM - ON DELETE VOTER Button Click Function
 
   $('.delete-voter-button').on('.click', function (event) {
     //Speak to Ellen to make CSS classess consistent. All Voters need a container class that can be used for appending.
+    //Needs logic built in so delete voter appears only if there is more than 1 voter on the page
   });
 
 //CREATE DECISION FORM - ON SUBMIT Function
@@ -165,7 +169,7 @@ $(() => {
         $.ajax({
           url: '/polls/',
           method: 'POST',
-          data: decisionObject
+          data: decisionObject // sending decisionObjec to server
         }).done(
           console.log('ajax call for posting to /polls is a success'); // check if any code needs to be executed when ajax post is done
         }).fail(function (err) {
@@ -174,6 +178,7 @@ $(() => {
         // ------ NEEDS TO BE WORKED ON
         // - Sends email to admin with URL link
         // - Sends email to voters with URL link
+        // - Quesiton: How will users access our pages via email since it is running on localhost?
       }
     });
 

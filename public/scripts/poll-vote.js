@@ -14,6 +14,9 @@
 
   // WHEN SUBMIT BUTTON is CLICKED
 
+
+
+
     // ---- Ranking for vote options gets sent to server (#######Need to implement the Borda Count Method#######)
     // ---- Server gets the decision_id and option_id using the URL string
     // ---- Server redirects if the Voter URL is accessed again to the Admin URL
