@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+  // add/remove new options
   const maxOption = 6;
   const optWrapper = $(".addition-option");
   const add_opt_button = $(".add-option-button");
@@ -16,6 +18,7 @@ $(document).ready(function() {
     o.preventDefault(); $(this).parent('div').parent('div').parent('div').remove(); x--;
   });
 
+  // add/remove new voter
   const maxVoter = 10;
   const voterWrapper = $(".addition-voter");
   const add_voter_button = $(".add-voter-button");
@@ -32,4 +35,8 @@ $(document).ready(function() {
   $(voterWrapper).on("click", ".delete-voter-button", function(v){
     v.preventDefault(); $(this).parent('div').parent('div').parent('div').remove(); y--;
   });
+
+
+  // time picker function
+
 });
