@@ -42,7 +42,7 @@
 //Define random text generator function here for URL's
 function makeURL() {
   var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
-  //do {
+  //do { // STRETCH -- implement to check if URL already exists in database
     var URL = "";
     for (var i = 0; i < 20; i++ ) {
       URL += charset.charAt(Math.floor(Math.random() * charset.length));
@@ -97,49 +97,24 @@ function isFieldEmpty(elementArray, cb) {
 
 $(() => {
 
-//CREATE DECISON FORM - ON ADD OPTION Button Click Function
-
-  $('.add-option-button').on('.click', function (event) {
-    //Speak to Ellen to make CSS classess consistent. All Options need a container class that can be used for appending.
-    //Needs to have logic to restrict to a max of 6 options
-  });
-
-//CREATE DECISION FORM - ON ADD VOTER Button Click Function
-
-  $('.add-voter-button').on('.click', function (event) {
-    //Speak to Ellen to make CSS classess consistent. All Voters need a container class that can be used for appending.
-    //Needs to have logic to restrict to a max of 10 voters
-  });
-
-//CREATE DECISON FORM - ON DELETE OPTION Button Click Function
-
-  $('.delete-option-button').on('.click', function (event) {
-    //Speak to Ellen to make CSS classess consistent. All Options need a container class that can be used for appending.
-    //Need logic built in so delete button appears only if there are more than 2 options on the page
-  });
-
-//CREATE DECISON FORM - ON DELETE VOTER Button Click Function
-
-  $('.delete-voter-button').on('.click', function (event) {
-    //Speak to Ellen to make CSS classess consistent. All Voters need a container class that can be used for appending.
-    //Needs logic built in so delete voter appears only if there is more than 1 voter on the page
-  });
-
 //CREATE DECISION FORM - ON SUBMIT Function
   $('.create-decision-form').on('submit', function (event) { //Ask Ellen to change the class name to create-decision-form
     event.preventDefault();
+    $('.flash-message').text('');
     //DATA Validation SCRIPT
-      // if ($('.decision-title') === '' || $('.decision-title') === null) {
-      //   $('.decision-title-validation').innerText = 'Decision title cannot be empty.'; // Ask Ellen to add decision-title-validation class
-      // } else if ($('.decision-email') === '' || $('.decision-email') === null) {
-      //   $('.decision-email-validation').innerText = 'Decision email cannot be empty.'; // Ask Ellen to add decision-email-validation class
-      // } else if (isFieldEmpty(document.getElementsByClassName('option-title'), (i) => {
-      //   document.getElementsByClassName('option-title-validation')[i].innerText = 'Option title cannot be empty';
-      // })) { return;
-      // } else if (isFieldEmpty(document.getElementByClassName('voter-title'), (i) => {
-      //   document.getElementsByClassName('voter-email-validation')[i].innerText = 'Voter email cannot be empty';
-      // })) { return;
-      // } else {
+      if ($('.decision-admin-email').val() === '' || $('.decision-admin-email').val() === null) {
+        $('.decision-email-validation').text('Your email cannot be empty.');
+      } else if ($('.decision-title').val() === '' || $('.decision-title').val() === null) {
+        $('.decision-title-validation').text('Decision title cannot be empty.');
+      } else if ($('.decision-time').val() === '' || $('.decision-time').val() === null) {
+        $('.decision-time-validation').text('Poll period cannot be empty');
+      } else if (isFieldEmpty(document.getElementsByClassName('option-title'), (i) => {
+        document.getElementsByClassName('option-title-validation')[i].innerText = 'Option title cannot be empty';
+      })) { return;
+      } else if (isFieldEmpty(document.getElementsByClassName('voter-email'), (i) => {
+        document.getElementsByClassName('voter-email-validation')[i].innerText = 'Voter email cannot be empty';
+      })) { return;
+      } else {
         // ---- CREATE / ADD to Decision Object
         //Create and Add to Decision Ojbect with Options and Voters Arrays
         var decisionObject = {
@@ -148,7 +123,7 @@ $(() => {
           admin_url:      makeURL(),
           title:          $('.decision-title').val(),
           message:        $('.decision-message').val(),
-          time:           $('.decision-time').val(), // Will depened on input type
+          time:           Math.round(Date.now()/1000) + (Number($('.decision-time').val())*60), // Storing the poll create time (in seconds) + poll length time (in seconds)
           optionsArray:   makeOptionsArray(),
           votersArray:    makeVotersArray()
         };
@@ -172,7 +147,7 @@ $(() => {
         // - Sends email to admin with URL link
         // - Sends email to voters with URL link
         // - Quesiton: How will users access our pages via email since it is running on localhost?
-      // }
+      }
     });
 
 
