@@ -28,7 +28,7 @@ $(document).ready(function() {
     v.preventDefault();
     if(y < maxVoter){
       y++;
-      $(voterWrapper).append('<div class="addition-voter"><div class="form-group"><label class="col-lg-2 control-label" for="voterEmail">Voter</label><div class="col-lg-10"><input type="text" class="form-control add-voter-button" placeholder= "Enter voter email"><button type="button" class="btn btn-link delete-voter-button">Remove</button></div></div></div>');
+      $(voterWrapper).append('<div class="addition-voter"><div class="form-group"><label class="col-lg-2 control-label" for="voterEmail">Voter</label><div class="col-lg-10"><input type="text" class="form-control add-voter-button" placeholder= "Enter voter email"><input type="text" class="form-control voter-name" placeholder= "Enter voter name(optional)"><button type="button" class="btn btn-link delete-voter-button">Remove</button></div></div></div>');
     }
   });
 

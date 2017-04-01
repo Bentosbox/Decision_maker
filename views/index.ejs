@@ -6,6 +6,9 @@
    <meta charset="utf-8">
    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
    <link rel="stylesheet" href="/css/reset.css" media="screen">
+   <!-- <for local test only> -->
+   <link rel="stylesheet" href="../public/css/bootstrap.min.css" media="screen">
+   <link rel="stylesheet" href="../public/css/reset.css" media="screen">
 </head>
 <body>
   <div class="jumbotron under-navbar">
@@ -33,23 +36,21 @@
               <div class="form-group">
                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control decision-admin-email" id="inputEmail" placeholder="Please enter your mail">
+                  <input type="text" class="form-control decision-admin-email" placeholder="Please enter your mail">
+                  <span class="decision-admin-email-validation"></span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="ownerName" class="col-lg-2 control-label">Name (optional)</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control decision-admin-name" id="ownerName" placeholder="First Name">
+                  <input type="text" class="form-control decision-admin-name" placeholder="First Name">
                 </div>
               </div>
               <div class="form-group">
                 <label for="pollSubject" class="col-lg-2 control-label">Subject</label>
                 <div class="col-lg-10">
-
                   <input type="text" class="form-control decision-title" placeholder="What is this poll for?">
-
-                  <input type="text" class="form-control decision-title" id="pollSubject" placeholder="What is this poll for?">
-
+                  <span class="decision-title-validation"></span>
                 </div>
               </div>
               <!-- Date / time picker options -->
@@ -57,7 +58,7 @@
                 <label for="decision-time" class="col-lg-2 control-label">Period</label>
                 <div class="col-lg-10">
                   <input type="text" class="form-control decision-time" placeholder="Please enter when this vote will ended, in minutes">
-
+                  <span class="decision-time-validation"></span>
                 </div>
               </div>
 
@@ -103,19 +104,26 @@
                 <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
                 <div class="col-lg-10">
                   <input type="text" class="form-control voter-email" placeholder= "Enter voter's email">
+                  <input type="text" class="form-control voter-name" placeholder= "Enter voter's name(optional)">
+                  <span class="voter-email-validation"></span>
                 </div>
               </div>
 
-              <div class="addition-voter">
-              </div>
-              <!-- <div class="form-group">
-                <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control voter-email" placeholder= "Enter voter's email">
-                  <button type="button" class="btn btn-link delete-voter-button">Remove</button>
-                  <span class="voter-email-validation"></span>
-                </div>
+              <!-- <div class="addition-voter">
               </div> -->
+
+              <div class="addition-voter">
+              <div class="addition-voter">
+                <div class="form-group">
+                  <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
+                  <div class="col-lg-10">
+                    <input type="text" class="form-control add-voter-button" placeholder= "Enter voter email">
+                    <input type="text" class="form-control voter-name" placeholder= "Enter voter name(optional)">
+                    <button type="button" class="btn btn-link delete-voter-button">Remove</button>
+                  </div>
+                </div>
+              </div>
+              </div>
 
               <div class="form-group">
                 <div class="col-lg-10">
@@ -130,6 +138,7 @@
                   <textarea class="form-control decision-message" rows="3" id="textArea"></textarea>
                   <span class="help-block">Any thing you might want to inculde in the email that send to voters</span> </div>
               </div>
+
               <div class="form-group">
                 <div class="col-lg-6">
                       <p>
@@ -144,7 +153,7 @@
       </div>
     </div>
   </div>
-  <footer>
+  <!-- <footer>
     <div class="row">
       <div class="col-lg-12">
         <p class="pull-right"><a href="#top">Back to top</a></p>
@@ -152,7 +161,7 @@
           Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>.</p>
       </div>
     </div>
-  </footer>
+  </footer> -->
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
@@ -161,6 +170,13 @@
 <script type="text/javascript" src="/scripts/create-decision.js"></script>
 <script type="text/javascript" src="/scripts/holder.js"></script>
 <script type="text/javascript" src="/scripts/addMore.js"></script>
+<!-- <for local test only> -->
+<script type="text/javascript" src="../public/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="../public/scripts/respond.min.js"></script>
+<script type="text/javascript" src="../public/scripts/create-decision.js"></script>
+<script type="text/javascript" src="../public/scripts/holder.js"></script>
+<script type="text/javascript" src="../public/scripts/addMore.js"></script>
+
 
 </body>
 </html>
