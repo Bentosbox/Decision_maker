@@ -6,9 +6,11 @@
    <meta charset="utf-8">
    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
    <link rel="stylesheet" href="/css/reset.css" media="screen">
+  <!-- <link rel="stylesheet" href="/css/timepicki.css" media="screen"> -->
    <!-- for local test only -->
    <link rel="stylesheet" href="../public/css/bootstrap.min.css" media="screen">
    <link rel="stylesheet" href="../public/css/reset.css" media="screen">
+   <!-- <link rel="stylesheet" href="../public/css/timepicki.css" media="screen"> -->
 </head>
 <body>
   <div class="jumbotron under-navbar">
@@ -56,9 +58,9 @@
               </div>
               <!-- Date / time picker options -->
               <div class="form-group">
-                <label for="decision-time" class="col-lg-2 control-label">Period</label>
+                <label for="decision-time" class="col-lg-2 control-label">End Time</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control decision-time" placeholder="Please enter when this vote will ended, in minutes">
+                  <input type="text" name="timepicker" class="form-control decision-time" placeholder="Please enter a number between 1- 60 ">
                   <span class="decision-time-validation flash-message"></span>
                 </div>
               </div>
@@ -157,6 +159,7 @@
 <script type="text/javascript" src="/scripts/create-decision.js"></script>
 <script type="text/javascript" src="/scripts/holder.js"></script>
 <script type="text/javascript" src="/scripts/addMore.js"></script>
+<script type="text/javascript" src="/scripts/timepicki.js"></script>
 
 <!-- for local test only -->
 <script type="text/javascript" src="../public/scripts/bootstrap.min.js"></script>
@@ -164,6 +167,7 @@
 <script type="text/javascript" src="../public/scripts/create-decision.js"></script>
 <script type="text/javascript" src="../public/scripts/holder.js"></script>
 <script type="text/javascript" src="../public/scripts/addMore.js"></script>
+<!-- <script type="text/javascript" src="../public/scripts/timepicki.js"></script> -->
 
 </body>
 </html>

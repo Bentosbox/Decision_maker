@@ -39,4 +39,14 @@ $(document).ready(function() {
 
   // time picker function
 
+  // $(".decision-time").timepicki({
+  //   show_meridian:false,
+  //   min_hour_value:0,
+  //   max_hour_value:23
+  // });
+
+
+
+
+
 });
