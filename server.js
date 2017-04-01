@@ -46,6 +46,7 @@ app.use("/api/users", usersRoutes(knex));
 
 //////////////// GET PAGES ///////////////
 
+
 app.get("/", (req, res) => {
   res.redirect("/polls");
 });
