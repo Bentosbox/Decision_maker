@@ -44,45 +44,228 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 
 
+//////////////// GET PAGES ///////////////
 
-////////// Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  res.redirect("/polls");
+});
+
+app.get("/polls", (req, res) => {
+  res.status(200).render("index");
+});
+
+app.get("/polls/result/:id", (req, res) => {
+  res.status(200).render("result");
+});
+
+app.get("/polls/:id", (req, res) => {
+  res.status(200).render("vote");
 });
 
 
-///////// PLACEHOLDER FOR FULL MAILGUN RUN FUNCTION
+/////////////POST REQUESTS//////////////////
 
-// app.post('/polls', (req, res) => {
+app.post('/polls', (req, res) => {
+  console.log(req.body);
+  /////Decision Table///////
+  let email_subject = req.body.title;
+  let email_text = req.body.message;
+  let email_admin = req.body.admin_email;
+  /// may need for each to loop thorugh each voter///
+  // let email_voter = req.body[""];
+  let rem_time = req.body.time;
+  //options
+  let admin_url = generateRandomString();
+  let voter_url = generateRandomString();
+  let url_voter = 'localhost8080:' + req.body.voter_url;
+  let url_admin = 'localhost8080:' + req.body.admin_url;
+
+  /////////GENERATE RANDOM STRING
+
+    //////////////// INSERT INFORMATION INTO TABLES ///////////////////
+////////////////WORKING TEMPLATE/////////////////////////
+
+  // for (let email in email_voter)
+  // for (let option in )
+  console.log(req.body.votersArray[0].voter_email);
+  console.log(req.body.votersArray[0].voter_url);
+
+  knex('decisions')
+    .returning('id')
+    .insert({
+      title: email_subject,
+      time: rem_time,
+      message: email_text,
+      admin_email: email_admin,
+      admin_name: req.body.admin_name,
+      admin_url: url_admin
+    })
+    .then(function([decisionId]) {
+      console.log(decisionId);
+      // for (var i = 0; i > req.optionsArray.length; i++) {
+        return Promise.all([
+          knex('voters')
+            .returning('id')
+            .insert({
+              voter_name: req.body.votersArray[0].voter_name;
+              voter_email: req.body.votersArray[0].voter_email,
+              voter_url: req.body.votersArray[0].voter_url,
+              decision_id: decisionId
+            }),
+          knex('options')
+            .returning('id')
+            .insert({
+              title: req.body.optionsArray[0].title,
+              description: req.body.optionsArray[0].description,
+              decision_id: decisionId,
+              total_rank: 0
+            })
+        ]);
+      // }
+      })
+      .then(function([[voterId], [optionId]]) {
+        return knex('polls')
+        .insert({
+          voter_id: voterId,
+          option_id: optionId,
+          base_rank: 0
+        })
+      /////Also insert into polls table for each and ends here.
+    }).finally(knex.destroy);
+
+
+  ///////// PLACEHOLDER FOR FULL MAILGUN RUN FUNCTION
+    //////////PlaceHolder For Email Function////////////
+
+  // function sendEmail() {
+  //   var data = {
+  //     from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+  //     to: 'ben_li5@yahoo.ca',
+  //     subject: 'Hello',
+  //     text: 'Testing some Mailgun awesomness!'
+  //   };
+  //   mailgun.messages().send(data, function (error, body) {
+  //     console.log(body);
+  //   });
+  // }
+  // sendEmail();
+  //////////////////////////////////////////////////////
+
+  ///VOTER EMAIL///
+
+    var voterEmail = {
+      from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+      to: req.body.voter_email,
+      subject: email_subject,
+      text: email_text, url_voter
+    }
+
+    mailgun.messages().send(voterEmail, function (error, body) {
+      console.log(body);
+    });
+
+  // /ADMIN EMAIL///
+
+  var adminEmail = {
+      from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+      to: email_admin,
+      subject: email_subject,
+      text: 'Thank you for using Decision Maker. Your administration and user link are as follows: ', url_admin, url_voter
+    }
+
+    mailgun.messages().send(adminEmail, function (error, body) {
+      console.log(body);
+    });
+
+});
+
+
+// knex('decisions')
+//     .returning('id')
+//     .insert({
+//       title: 'Testing',
+//       time: 90,
+//       message: 'how are you doing today',
+//       admin_email: 'hello@world.com',
+//       admin_name: 'mrroboto',
+//       admin_url: '3j391f'
+//     })
+//     .then(function([decisionId]) {
+//       return Promise.all([
+//         knex('voters')
+//           .returning('id')
+//           .insert({
+//             voter_email: 'voters_email',
+//             voter_name: 'voters_name',
+//             voter_url: 'voters_url' ,
+//             decision_id: decisionId
+//           }),
+//         knex('options')
+//           .returning('id')
+//           .insert({
+//             title: 'titles',
+//             description: 'descriptions',
+//             decision_id: decisionId,
+//             total_rank: 0
+//           })
+//       ]);
+//     })
+//     .then(function([[voterId], [optionId]]) {
+//       return knex('polls')
+//       .insert({
+//         voter_id: voterId,
+//         option_id: optionId,
+//         base_rank: 0
+//       })
+//     }).finally(knex.destroy)
+
+  // console.log(knexInsert());
+
+
+
+knex('decisions')
+  .join('options', 'decisions.id', '=', 'options.decision_id')
+  .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  .select()
+  .then(function(result) {
+  console.log(result);
+  // console.log('Found ' + result.length + ' person(s) by the last name ' + input)
+  // for (var i = 0; i < result.length; i++) {
+  //   console.log(result[i].first_name + ' ' + result[i].last_name + ' Born: ' + result[i].birthdate)
+  // }
+});
+
+
+// function selectFrom() {
+// knex.select().from('decisions')
+// knex.select().from('decisions')
+// knex.select().from('decisions')
+//   .then
+// .finally(knex.destroy)
 // }
-
-function sendEmail() {
-
-  var data = {
-    from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
-    to: 'ben_li5@yahoo.ca',
-    subject: 'Hello',
-    text: 'Testing some Mailgun awesomness!'
-  };
+// console.log(selectFrom());
 
 
-  /////PlaceHolder For Actual Links
+app.post('/polls/:id', (req, res) => {
+})
 
-  // var voterEmail = {
-  //   from: 'decisions.admin_email <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
-  //   to: 'voters.email'
-  //   subject: 'decision.title'
-  //   text: 'decision.message'
-  // }
-  // mailgun.messages().send(data, function (error, body) {
-  //   console.log(body);
-  // }
 
-  mailgun.messages().send(data, function (error, body) {
-    console.log(body);
-  });
+/////////////////FUNCTIONS//////////////////
+
+
+// function to generate a random string of 6 alpha numeric characters
+function generateRandomString() {
+  var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var text = "";
+  for( var i=0; i < 6; i++ ) {
+    text += charset.charAt(Math.floor(Math.random() * charset.length));
+    }
+  return text;
 }
-sendEmail();
+// Used a do-while loop to generate random string until it does not exist in the database
+//     do {
+//       var shortURL = generateRandomString();
+//     } while (urlDatabase[shortURL]);
 
 
 
