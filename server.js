@@ -78,8 +78,8 @@ app.post('/polls', (req, res) => {
   //options
   let admin_url = generateRandomString();
   let voter_url = generateRandomString();
-  let url_voter = 'localhost8080:' + req.body.voter_url
-  let url_admin = 'localhost8080:' + req.body.admin_url
+  let url_voter = 'localhost8080:' + req.body.voter_url;
+  let url_admin = 'localhost8080:' + req.body.admin_url;
 
   /////////GENERATE RANDOM STRING
 
@@ -88,7 +88,8 @@ app.post('/polls', (req, res) => {
 
   // for (let email in email_voter)
   // for (let option in )
-
+  console.log(req.body.votersArray[0].voter_email);
+  console.log(req.body.votersArray[0].voter_url);
 
   knex('decisions')
     .returning('id')
@@ -101,21 +102,22 @@ app.post('/polls', (req, res) => {
       admin_url: url_admin
     })
     .then(function([decisionId]) {
+      console.log(decisionId);
       // for (var i = 0; i > req.optionsArray.length; i++) {
         return Promise.all([
           knex('voters')
             .returning('id')
             .insert({
-              voter_email: req.body.votersArray.voter_email,
-              voter_name: req.body.votersArray.voter_email,
-              voter_url: req.body.votersArray.voter_url,
+              voter_name: req.body.votersArray[0].voter_name;
+              voter_email: req.body.votersArray[0].voter_email,
+              voter_url: req.body.votersArray[0].voter_url,
               decision_id: decisionId
             }),
           knex('options')
             .returning('id')
             .insert({
-              title: req.body.optionsArray.title,
-              description: req.body.optionsArray.description,
+              title: req.body.optionsArray[0].title,
+              description: req.body.optionsArray[0].description,
               decision_id: decisionId,
               total_rank: 0
             })
