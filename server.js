@@ -117,7 +117,15 @@ app.post('/polls', (req, res) => {
       admin_url: req.body.admin_url
     })
     .then(function([decisionId]) {
-      const votersPromises = req.body.votersArray.map(voter => knex('voters').returning('id').insert({voter_email: voter.voter_email, voter_url: voter.voter_url, decision_id: decisionId}));
+      const votersPromises = req.body.votersArray
+        .map(voter => knex('voters')
+        .returning('id')
+        .insert({
+          voter_email: voter.voter_email,
+          voter_url: voter.voter_url,
+          decision_id:
+          decisionId
+        }));
       const emailsPromises = req.body.optionsArray.map(option => knex('options').returning('id').insert({title: option.title, description: option.description, decision_id: decisionId, total_rank: 0}));
       return Promise.all(votersPromises.concat(emailsPromises))
     });
@@ -164,6 +172,22 @@ app.post('/polls', (req, res) => {
 
 
 app.post('/polls/:id', (req, res) => {
+  knex('decisions')
+  .join('options', 'decisions.id', '=', 'options.decision_id')
+  .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  .select('*')
+  .where('voter_url', req.params.id)
+
+// sum rank together
+// knex update to update value
+  // title: subwya rank: 5
+  // const rankPromise = req.body.'rankArray'.map(option => knex
+  // })
+  // .then (function(voteResults) {
+
+  //   knex('options')
+  //     .where()
+  //     .insert({})
 })
 
 
