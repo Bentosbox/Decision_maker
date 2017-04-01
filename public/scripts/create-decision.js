@@ -76,7 +76,7 @@ function makeVotersArray() {
   for (var i = 0; i < numberOfVoters; i++) {
     var voterObject = {
       voter_email:  voterEmailElement[i].value,
-      voter_name:   voterNameElement[i].value,
+      // voter_name:   voterNameElement[i].value,
       voter_url:    makeURL()
     };
     votersArray.push(voterObject);
