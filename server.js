@@ -56,11 +56,33 @@ app.get("/polls", (req, res) => {
 });
 
 app.get("/polls/result/:id", (req, res) => {
-  res.status(200).render("result");
+  knex('decisions')
+  .join('options', 'decisions.id', '=', 'options.decision_id')
+  .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  .select('*')
+  .where({
+    url: req.params.id
+  })
+  .then (function(voteResults) {
+    let resultData = {resultPage: voteResults};
+    console.log(resultData);
+  res.status(200).render("result", resultData);
+  });
 });
 
 app.get("/polls/:id", (req, res) => {
+  knex('decisions')
+  .join('options', 'decisions.id', '=', 'options.decision_id')
+  .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  .select('*')
+  .where({
+    url: req.params.id
+  })
+  .then (function(voteChoices) {
+    let resultData = {votePage: voteChoices};
+    console.log(votePage);
   res.status(200).render("vote");
+  });
 });
 
 
@@ -99,28 +121,8 @@ app.post('/polls', (req, res) => {
       const emailsPromises = req.body.optionsArray.map(option => knex('options').returning('id').insert({title: option.title, description: option.description, decision_id: decisionId, total_rank: 0}));
       return Promise.all(votersPromises.concat(emailsPromises))
     });
-      // console.log(decisionId);
-      //   return Promise.all([
+    // .finally(process.exit);
 
-      //       knex('voters')
-      //         .returning('id')
-      //         .insert({
-      //           // voter_name: req.body.votersArray[0].voter_name,
-      //           voter_email: req.body.votersArray[0].voter_email,
-      //           voter_url: req.body.votersArray[0].voter_url,
-      //           decision_id: decisionId
-      //       })
-      //     knex('options')
-      //       .returning('id')
-      //       .insert({
-      //         title: req.body.optionsArray[0].title,
-      //         description: req.body.optionsArray[0].description,
-      //         decision_id: decisionId,
-      //         total_rank: 0
-      //       })
-      //   ]);
-      // // }
-      // })
       // .then(function([[voterId], [optionId]]) {
       //   return knex('polls')
       //   .insert({
@@ -157,7 +159,7 @@ app.post('/polls', (req, res) => {
     mailgun.messages().send(adminEmail, function (error, body) {
       console.log(body);
     });
-
+    res.redirect("/polls/results/" + req.body.admin_url);
 });
 
 
