@@ -46,20 +46,21 @@ app.use("/api/users", usersRoutes(knex));
 
 //////////////// GET PAGES ///////////////
 
-// app.get("/", (req, res) => {
-//   res.redirect("/polls");
-// });
+
+app.get("/", (req, res) => {
+  res.redirect("/polls");
+});
 
 app.get("/polls", (req, res) => {
-  res.status(200).render("index")
+  res.status(200).render("index");
 });
 
 app.get("/polls/result/:id", (req, res) => {
-  res.status(200).render("result")
+  res.status(200).render("result");
 });
 
 app.get("/polls/:id", (req, res) => {
-  res.status(200).render("vote")
+  res.status(200).render("vote");
 });
 
 
@@ -68,16 +69,16 @@ app.get("/polls/:id", (req, res) => {
 app.post('/polls', (req, res) => {
   console.log(req.body);
   /////Decision Table///////
-  let email_subject = req.body["pollSubject"];
-  let email_text = req.body[""];
-  let email_admin = req.body["inputEmail"];
+  let email_subject = req.body.title;
+  let email_text = req.body.message;
+  let email_admin = req.body.admin_email;
   /// may need for each to loop thorugh each voter///
-  let email_voter = req.body[""];
-  let time = req.body["decision-time"];
+  // let email_voter = req.body[""];
+  let rem_time = req.body.time;
   //options
   let admin_url = generateRandomString();
   let voter_url = generateRandomString();
-  let url_voter = 'localhost8080:' + voters.url
+  let url_voter = 'localhost8080:' + req.body.admin_url
     let url_admin = 'localhost8080:' + decisions.admin_url
 
   /////////GENERATE RANDOM STRING
@@ -88,23 +89,46 @@ app.post('/polls', (req, res) => {
   // for (let email in email_voter)
   // for (let option in )
 
+
   knex('decisions')
     .returning('id')
-    .insert({title: email_subject, time: req.body[""], message: email_text, admin_email: email_admin, admin_name: req.body[""], admin_url: url_admin})
-    .then(function([decisionId]) {
-        /////Loop through from here for every voter and option available.
-      return Promise.all([
-        knex('voters')
-          .returning('id')
-          .insert({voter_email: req.body[""], voter_name: req.body[""], voter_url: url_voter, decision_id: decisionId}),
-        knex('options')
-          .returning('id')
-          .insert({title: req.body[""], description: req.body[""], decision_id: decisionId, total_rank: 0})
-      ]);
+    .insert({
+      title: email_subject,
+      time: rem_time,
+      message: email_text,
+      admin_email: email_admin,
+      admin_name: req.body.admin_name,
+      admin_url: url_admin
     })
-    .then(function([[voterId], [optionId]]) {
-      return knex('polls')
-      .insert({voter_id: voterId, option_id: optionId, base_rank: 0})
+    .then(function([decisionId]) {
+      for (i = 0; i > req.optionsArray.length; i++) {
+        return Promise.all([
+          knex('voters')
+            .returning('id')
+            .insert({
+              voter_email: req.body.votersArray.voter_email,
+              voter_name: req.body.votersArray.voter_email,
+              voter_url: req.body.votersArray.voter_url,
+              decision_id: decisionId
+            }),
+          knex('options')
+            .returning('id')
+            .insert({
+              title: req.body.optionsArray.title,
+              description: optionsArray.description,
+              decision_id: decisionId,
+              total_rank: 0
+            })
+        ]);
+      }
+      })
+      .then(function([[voterId], [optionId]]) {
+        return knex('polls')
+        .insert({
+          voter_id: voterId,
+          option_id: optionId,
+          base_rank: 0
+        })
       /////Also insert into polls table for each and ends here.
     }).finally(knex.destroy)
 
@@ -123,7 +147,7 @@ app.post('/polls', (req, res) => {
       console.log(body);
     });
   }
-  sendEmail();
+  // sendEmail();
   //////////////////////////////////////////////////////
 
   ///VOTER EMAIL///
@@ -152,6 +176,72 @@ app.post('/polls', (req, res) => {
 // }
 });
 
+
+// knex('decisions')
+//     .returning('id')
+//     .insert({
+//       title: 'Testing',
+//       time: 90,
+//       message: 'how are you doing today',
+//       admin_email: 'hello@world.com',
+//       admin_name: 'mrroboto',
+//       admin_url: '3j391f'
+//     })
+//     .then(function([decisionId]) {
+//       return Promise.all([
+//         knex('voters')
+//           .returning('id')
+//           .insert({
+//             voter_email: 'voters_email',
+//             voter_name: 'voters_name',
+//             voter_url: 'voters_url' ,
+//             decision_id: decisionId
+//           }),
+//         knex('options')
+//           .returning('id')
+//           .insert({
+//             title: 'titles',
+//             description: 'descriptions',
+//             decision_id: decisionId,
+//             total_rank: 0
+//           })
+//       ]);
+//     })
+//     .then(function([[voterId], [optionId]]) {
+//       return knex('polls')
+//       .insert({
+//         voter_id: voterId,
+//         option_id: optionId,
+//         base_rank: 0
+//       })
+//     }).finally(knex.destroy)
+
+  // console.log(knexInsert());
+
+
+
+knex('decisions')
+  .join('options', 'decisions.id', '=', 'options.decision_id')
+  .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  .select()
+  .then(function(result) {
+  console.log(result);
+  // console.log('Found ' + result.length + ' person(s) by the last name ' + input)
+  // for (var i = 0; i < result.length; i++) {
+  //   console.log(result[i].first_name + ' ' + result[i].last_name + ' Born: ' + result[i].birthdate)
+  // }
+});
+
+
+
+// function selectFrom() {
+// knex.select().from('decisions')
+// knex.select().from('decisions')
+// knex.select().from('decisions')
+//   .then
+// .finally(knex.destroy)
+// }
+// console.log(selectFrom());
 
 
 app.post('/polls/:id', (req, res) => {
