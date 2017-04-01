@@ -61,7 +61,7 @@ app.get("/polls/result/:id", (req, res) => {
   .join('voters', 'decisions.id', '=', 'voters.decision_id')
   .select('*')
   .where({
-    url: req.params.id
+    admin_url: req.params.id
   })
   .then (function(voteResults) {
     let resultData = {resultPage: voteResults};
@@ -76,12 +76,12 @@ app.get("/polls/:id", (req, res) => {
   .join('voters', 'decisions.id', '=', 'voters.decision_id')
   .select('*')
   .where({
-    url: req.params.id
+    voter_url: req.params.id
   })
   .then (function(voteChoices) {
-    let resultData = {votePage: voteChoices};
-    console.log(votePage);
-  res.status(200).render("vote");
+    let voteData = {votePage: voteChoices};
+    console.log(voteData);
+  res.status(200).render("vote", voteData);
   });
 });
 
