@@ -42,12 +42,12 @@
 //Define random text generator function here for URL's
 function makeURL() {
   var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
-  do {
+  //do {
     var URL = "";
-    for (var i = 0; i < 20; i++ ) {
+    //for (var i = 0; i < 20; i++ ) {
       URL += charset.charAt(Math.floor(Math.random() * charset.length));
-    }
-  } while (checkURLTable(URL)) //Ask Ben to create a DB server side function to do a select query based on URL sent to check if it already exists
+   // }
+//  } while (checkURLTable(URL)) //Ask Ben to create a DB server side function to do a select query based on URL sent to check if it already exists
   return URL;
 }
 
@@ -157,7 +157,7 @@ $(() => {
 
         // --- CALL AJAX function by PASSING it Decision Object when user hits the SUBMIT button (AJAX is Optional SO SERVER CAN TAKE DATA DIRECTLY FROM HTML file)
         $.ajax({
-          url: '/polls/',
+          url: '/polls',
           method: 'POST',
           data: decisionObject // sending decisionObjec to server
         }).done(
