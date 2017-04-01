@@ -108,7 +108,7 @@ app.post('/polls', (req, res) => {
           knex('voters')
             .returning('id')
             .insert({
-              voter_name: req.body.votersArray[0].voter_name;
+              voter_name: req.body.votersArray[0].voter_name,
               voter_email: req.body.votersArray[0].voter_email,
               voter_url: req.body.votersArray[0].voter_url,
               decision_id: decisionId
