@@ -72,7 +72,7 @@
     var optionWrapper = $('#sortable');
 
     for (var i = 0; i < decisionObject.optionsArray.length; i++) {
-      optionWrapper.append('<ul class="list-group " id="sortable"><li class="list-group-item option-title-display" id="' + decisionObject.optionsArray[i].id + '"><span class="badge option-description-display">' + decisionObject.optionsArray[i].description + '</span>' + decisionObject.optionsArray[i].title + '</li></ul></div>');
+      optionWrapper.append('<li class="list-group-item option-title-display" id="' + decisionObject.optionsArray[i].id + '"><span class="badge option-description-display">' + decisionObject.optionsArray[i].description + '</span>' + decisionObject.optionsArray[i].title + '</li></div>');
     }
 
 
