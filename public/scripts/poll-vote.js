@@ -68,11 +68,12 @@
 
     //Render the relevant information from the decisionObject object in the browser (check if Ellen can help)
 
-     var optionWrapper = $('#sortable');
 
-     for (var i = 0; i < decisionObject.optionsArray.length; i++) {
-       optionWrapper.append('<ul class="list-group " id="sortable"><li class="list-group-item option-title-display" id="' + decisionObject.optionsArray[i].id + '"><span class="badge option-description-display">' + decisionObject.optionsArray[i].description + '</span>' + decisionObject.optionsArray[i].title + '</li></ul></div>');
-     }
+    var optionWrapper = $('#sortable');
+
+    for (var i = 0; i < decisionObject.optionsArray.length; i++) {
+      optionWrapper.append('<ul class="list-group " id="sortable"><li class="list-group-item option-title-display" id="' + decisionObject.optionsArray[i].id + '"><span class="badge option-description-display">' + decisionObject.optionsArray[i].description + '</span>' + decisionObject.optionsArray[i].title + '</li></ul></div>');
+    }
 
 
     //DATA Validation SCRIPTs
@@ -124,5 +125,3 @@
       // ---- Server gets the decision_id and option_id using the URL string
       // ---- Server redirects if the Voter URL is accessed again to the Admin URL
   });
-
-
