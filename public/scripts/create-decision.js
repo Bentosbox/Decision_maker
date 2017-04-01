@@ -1,4 +1,4 @@
-//include require(s) for bootstrap
+  //include require(s) for bootstrap
 
 //User - Interaction OR Page Behaviour Scripts (JQUERY)
 
@@ -42,21 +42,21 @@
 //Define random text generator function here for URL's
 function makeURL() {
   var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
-  do {
+  //do {
     var URL = "";
-    for (var i = 0; i < 20; i++ ) {
+    //for (var i = 0; i < 20; i++ ) {
       URL += charset.charAt(Math.floor(Math.random() * charset.length));
-    }
-  } while (checkURLTable(URL)) //Ask Ben to create a DB server side function to do a select query based on URL sent to check if it already exists
+   // }
+//  } while (checkURLTable(URL)) //Ask Ben to create a DB server side function to do a select query based on URL sent to check if it already exists
   return URL;
 }
 
 //Define makeOptionsArray() here
 function makeOptionsArray() {
   var optionsArray = [];
-  var numberOfOptions = document.getElementsbyClassName('.option-title').length;
-  var optionTitleElement = document.getElementsbyClassName('.option-title');
-  var optionDescriptionElement = document.getElementsbyClassName('.option-description');
+  var numberOfOptions = document.getElementsbyClassName('option-title').length;
+  var optionTitleElement = document.getElementsbyClassName('option-title');
+  var optionDescriptionElement = document.getElementsbyClassName('option-description');
   for (var i = 0; i < numberOfOptions; i++) {
     var optionObject = {
       title:        optionTitleElement[i].val();
@@ -70,9 +70,9 @@ function makeOptionsArray() {
 //Define makeVotersArray() here
 function makeVotersArray() {
   var votersArray = [];
-  var numberOfVoters = document.getElementsbyClassName('.voter-email').length;
-  var voterEmailElement = document.getElementsbyClassName('.voter-email');
-  var voterNameElement = document.getElementsbyClassName('.voter-name');
+  var numberOfVoters = document.getElementsbyClassName('voter-email').length;
+  var voterEmailElement = document.getElementsbyClassName('voter-email');
+  var voterNameElement = document.getElementsbyClassName('voter-name');
   for (var i = 0; i < numberOfVoters.length; i++) {
     var voterObject = {
       voter_email:  voterEmailElement[i].val();
@@ -96,16 +96,6 @@ function isFieldEmpty(elementArray, cb) {
 }
 
 $(() => {
-
-//Sample AJAX call to test the homepage by rendering list of users from test table 'users' in database
-  $.ajax({
-    method: "GET",
-    url: "/api/users"
-  }).done((users) => {
-    for(user of users) {
-      $("<div>").text(user.name).appendTo($("body"));
-    }
-  });
 
 //CREATE DECISON FORM - ON ADD OPTION Button Click Function
 
@@ -140,14 +130,14 @@ $(() => {
     event.preventDefault();
     //DATA Validation SCRIPT
       if ($('.decision-title') === '' || $('.decision-title') === null) {
-        $('.decision-title-validation').text('Decision title cannot be empty.'); // Ask Ellen to add decision-title-validation class
+        $('.decision-title-validation').innerText = 'Decision title cannot be empty.'; // Ask Ellen to add decision-title-validation class
       } else if ($('.decision-email') === '' || $('.decision-email') === null) {
-        $('.decision-email-validation').text('Decision email cannot be empty.'); // Ask Ellen to add decision-email-validation class
-      } else if (isFieldEmpty(document.getElementsbyClassName('.option-title'), (i) => {
-        document.getElementsbyClassName('.option-title-validation')[i].text('Option title cannot be empty');
+        $('.decision-email-validation').innerText = 'Decision email cannot be empty.'; // Ask Ellen to add decision-email-validation class
+      } else if (isFieldEmpty(document.getElementsbyClassName('option-title'), (i) => {
+        document.getElementsbyClassName('option-title-validation')[i].innerText = 'Option title cannot be empty';
       })) { return;
-      } else if (isFieldEmpty(document.getElementsbyClassName('.voter-title'), (i) => {
-        document.getElementsbyClassName('.voter-email-validation')[i].text('Voter email cannot be empty');
+      } else if (isFieldEmpty(document.getElementsbyClassName('voter-title'), (i) => {
+        document.getElementsbyClassName('voter-email-validation')[i].innerText = 'Voter email cannot be empty';
       })) { return;
       } else {
         // ---- CREATE / ADD to Decision Object
@@ -158,7 +148,7 @@ $(() => {
           admin_url:      makeURL(),
           title:          $('.decision-title').val(),
           message:        $('.decision-message').val(),
-          time:           $('.decision-time').val(),
+          time:           $('.decision-time').val(), // Will depened on input type
           optionsArray:   makeOptionsArray(),
           votersArray:    makeVotersArray()
         };
@@ -167,7 +157,7 @@ $(() => {
 
         // --- CALL AJAX function by PASSING it Decision Object when user hits the SUBMIT button (AJAX is Optional SO SERVER CAN TAKE DATA DIRECTLY FROM HTML file)
         $.ajax({
-          url: '/polls/',
+          url: '/polls',
           method: 'POST',
           data: decisionObject // sending decisionObjec to server
         }).done(

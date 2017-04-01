@@ -136,44 +136,44 @@ app.post('/polls', (req, res) => {
   ///////// PLACEHOLDER FOR FULL MAILGUN RUN FUNCTION
     //////////PlaceHolder For Email Function////////////
 
-  function sendEmail() {
-    var data = {
-      from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
-      to: 'ben_li5@yahoo.ca',
-      subject: 'Hello',
-      text: 'Testing some Mailgun awesomness!'
-    };
-    mailgun.messages().send(data, function (error, body) {
-      console.log(body);
-    });
-  }
+  // function sendEmail() {
+  //   var data = {
+  //     from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+  //     to: 'ben_li5@yahoo.ca',
+  //     subject: 'Hello',
+  //     text: 'Testing some Mailgun awesomness!'
+  //   };
+  //   mailgun.messages().send(data, function (error, body) {
+  //     console.log(body);
+  //   });
+  // }
   // sendEmail();
   //////////////////////////////////////////////////////
 
   ///VOTER EMAIL///
 
-    // var voterEmail = {
-    //   from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
-    //   to: voters.email
-    //   subject: email_subject
-    //   text: email_text, url_voter
-    // }
-    // mailgun.messages().send(voterEmail, function (error, body) {
-    //   console.log(body);
-    // }
+    var voterEmail = {
+      from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+      to: req.body.voter_email
+      subject: email_subject
+      text: email_text, url_voter
+    }
+    mailgun.messages().send(voterEmail, function (error, body) {
+      console.log(body);
+    }
 
   // /ADMIN EMAIL///
 
-//   var adminEmail = {
-//       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
-//       to: decisions.admin_email
-//       subject: email_subject
-//       text: 'Thank you for using Decision Maker. Your administration and user link are as follows: ', url_admin, url_voter
-//     }
-//     mailgun.messages().send(adminEmail, function (error, body) {
-//       console.log(body);
-//     }
-// }
+  var adminEmail = {
+      from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+      to: email_admin
+      subject: email_subject
+      text: 'Thank you for using Decision Maker. Your administration and user link are as follows: ', url_admin, url_voter
+    }
+    mailgun.messages().send(adminEmail, function (error, body) {
+      console.log(body);
+    }
+}
 });
 
 
