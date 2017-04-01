@@ -44,9 +44,9 @@ function makeURL() {
   var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
   //do {
     var URL = "";
-    //for (var i = 0; i < 20; i++ ) {
+    for (var i = 0; i < 20; i++ ) {
       URL += charset.charAt(Math.floor(Math.random() * charset.length));
-   // }
+   }
 //  } while (checkURLTable(URL)) //Ask Ben to create a DB server side function to do a select query based on URL sent to check if it already exists
   return URL;
 }
@@ -54,13 +54,13 @@ function makeURL() {
 //Define makeOptionsArray() here
 function makeOptionsArray() {
   var optionsArray = [];
-  var numberOfOptions = document.getElementsbyClassName('option-title').length;
-  var optionTitleElement = document.getElementsbyClassName('option-title');
-  var optionDescriptionElement = document.getElementsbyClassName('option-description');
+  var numberOfOptions = document.getElementsByClassName('option-title').length;
+  var optionTitleElement = document.getElementsByClassName('option-title');
+  var optionDescriptionElement = document.getElementsByClassName('option-description');
   for (var i = 0; i < numberOfOptions; i++) {
     var optionObject = {
-      title:        optionTitleElement[i].val();
-      description:  optionDescriptionElement[i].val();
+      title:        optionTitleElement[i].value,
+      description:  optionDescriptionElement[i].value
     };
     optionsArray.push(optionObject);
   }
@@ -70,14 +70,14 @@ function makeOptionsArray() {
 //Define makeVotersArray() here
 function makeVotersArray() {
   var votersArray = [];
-  var numberOfVoters = document.getElementsbyClassName('voter-email').length;
-  var voterEmailElement = document.getElementsbyClassName('voter-email');
-  var voterNameElement = document.getElementsbyClassName('voter-name');
-  for (var i = 0; i < numberOfVoters.length; i++) {
+  var numberOfVoters = document.getElementsByClassName('voter-email').length;
+  var voterEmailElement = document.getElementsByClassName('voter-email');
+  var voterNameElement = document.getElementsByClassName('voter-name');
+  for (var i = 0; i < numberOfVoters; i++) {
     var voterObject = {
-      voter_email:  voterEmailElement[i].val();
-      voter_name:   voterNameElement[i].val();
-      voter_url:    makeURL();
+      voter_email:  voterEmailElement[i].value,
+      //voter_name:   voterNameElement[i].value,
+      voter_url:    makeURL()
     };
     votersArray.push(voterObject);
   }
@@ -87,7 +87,7 @@ function makeVotersArray() {
 //Define isFieldEmpty function here
 function isFieldEmpty(elementArray, cb) {
   for (var i = 0; i < elementArray.length; i++)  {
-    if (elementArray[i].val() === '' || elementArray[i].val() === null) {
+    if (elementArray[i].value === '' || elementArray[i].value === null) {
       cb(i);
       return true;
     }
@@ -129,17 +129,17 @@ $(() => {
   $('.create-decision-form').on('submit', function (event) { //Ask Ellen to change the class name to create-decision-form
     event.preventDefault();
     //DATA Validation SCRIPT
-      if ($('.decision-title') === '' || $('.decision-title') === null) {
-        $('.decision-title-validation').innerText = 'Decision title cannot be empty.'; // Ask Ellen to add decision-title-validation class
-      } else if ($('.decision-email') === '' || $('.decision-email') === null) {
-        $('.decision-email-validation').innerText = 'Decision email cannot be empty.'; // Ask Ellen to add decision-email-validation class
-      } else if (isFieldEmpty(document.getElementsbyClassName('option-title'), (i) => {
-        document.getElementsbyClassName('option-title-validation')[i].innerText = 'Option title cannot be empty';
-      })) { return;
-      } else if (isFieldEmpty(document.getElementsbyClassName('voter-title'), (i) => {
-        document.getElementsbyClassName('voter-email-validation')[i].innerText = 'Voter email cannot be empty';
-      })) { return;
-      } else {
+      // if ($('.decision-title') === '' || $('.decision-title') === null) {
+      //   $('.decision-title-validation').innerText = 'Decision title cannot be empty.'; // Ask Ellen to add decision-title-validation class
+      // } else if ($('.decision-email') === '' || $('.decision-email') === null) {
+      //   $('.decision-email-validation').innerText = 'Decision email cannot be empty.'; // Ask Ellen to add decision-email-validation class
+      // } else if (isFieldEmpty(document.getElementsByClassName('option-title'), (i) => {
+      //   document.getElementsByClassName('option-title-validation')[i].innerText = 'Option title cannot be empty';
+      // })) { return;
+      // } else if (isFieldEmpty(document.getElementByClassName('voter-title'), (i) => {
+      //   document.getElementsByClassName('voter-email-validation')[i].innerText = 'Voter email cannot be empty';
+      // })) { return;
+      // } else {
         // ---- CREATE / ADD to Decision Object
         //Create and Add to Decision Ojbect with Options and Voters Arrays
         var decisionObject = {
@@ -153,6 +153,8 @@ $(() => {
           votersArray:    makeVotersArray()
         };
 
+        console.log(decisionObject);
+
         //STRETCH - Add to Decision Object with the image location for the Admin
 
         // --- CALL AJAX function by PASSING it Decision Object when user hits the SUBMIT button (AJAX is Optional SO SERVER CAN TAKE DATA DIRECTLY FROM HTML file)
@@ -160,16 +162,17 @@ $(() => {
           url: '/polls',
           method: 'POST',
           data: decisionObject // sending decisionObjec to server
-        }).done(
+        }).done(function() {
           console.log('ajax call for posting to /polls is a success'); // check if any code needs to be executed when ajax post is done
-        }).fail(function (err) {
+        }
+        ).fail(function (err) {
           console.log('failed');
         });
         // ------ NEEDS TO BE WORKED ON
         // - Sends email to admin with URL link
         // - Sends email to voters with URL link
         // - Quesiton: How will users access our pages via email since it is running on localhost?
-      }
+      // }
     });
 
 
