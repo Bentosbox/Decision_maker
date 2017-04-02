@@ -55,19 +55,19 @@ app.get("/polls", (req, res) => {
 });
 
 app.get("/polls/result/:id", (req, res) => {
-  // knex('decisions')
-  // .join('voters', 'decisions.id', '=', 'voters.decision_id')
-  // .join('options', 'decisions.id', '=', 'options.decision_id')
-  // .select('*')
-  // .where({
-  //   admin_url: req.params.id
-  // })
-  // .then (function(voteResults) {
-  //   // console.log(voteResults);
-  //   let resultData = {resultPage: voteResults};
+  knex('decisions')
+  .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  .join('options', 'decisions.id', '=', 'options.decision_id')
+  .select('*')
+  .where({
+    admin_url: req.params.id
+  })
+  .then (function(voteResults) {
+    console.log(voteResults);
+    let resultData = {resultPage: voteResults};
     console.log('success');
-  res.render("result");
-  // });
+  res.render("result", resultData);
+  });
 });
 
 
@@ -94,14 +94,11 @@ app.get("/polls/:id", (req, res) => {
 app.post('/polls', (req, res) => {
   console.log(req.body);
   /////Decision Table///////
-  let email_subject = req.body.title;
+  let email_subject = req.body.decision_title;
   let email_text = req.body.message;
   let email_admin = req.body.admin_email;
   let rem_time = req.body.time;
-
-  /////MAILGUN EMAIL/////
-  // let text_voter = 'A poll is available at localhost8080:' + req.body.admin_url;
-  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost8080:/polls/admin' + req.body.admin_url + 'voter link: localhost8080:' + req.body.admin_url;
+  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost8080:/polls/admin' + req.body.admin_url /*+ 'voter link: localhost8080:' + req.body.admin_url; */
 
 
     //////////////// INSERT INFORMATION INTO TABLES ///////////////////
@@ -112,7 +109,7 @@ app.post('/polls', (req, res) => {
   knex('decisions')
     .returning('id')
     .insert({
-      title: email_subject,
+      decision_title: email_subject,
       time: rem_time,
       message: email_text,
       admin_email: email_admin,
@@ -129,7 +126,15 @@ app.post('/polls', (req, res) => {
           decision_id:
           decisionId
         }));
-      const emailsPromises = req.body.optionsArray.map(option => knex('options').returning('id').insert({title: option.title, description: option.description, decision_id: decisionId, total_rank: 0}));
+      const emailsPromises = req.body.optionsArray
+        .map(option => knex('options')
+          .returning('id')
+          .insert({
+            title: option.title,
+            description: option.description,
+            decision_id: decisionId,
+            total_rank: 0
+          }));
       return Promise.all(votersPromises.concat(emailsPromises))
     })
     // .finally(process.exit);
@@ -146,12 +151,12 @@ app.post('/polls', (req, res) => {
 
   ///VOTER EMAIL///
   req.body.votersArray.forEach(function(email) {
-    let url_voter = email_text + ' A poll is available for you at localhost8080: ' + email.voter_url;
+    let text_voter = email_text + ' A poll is available for you at localhost8080: ' + email.voter_url;
     var voterEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
       to: email.voter_email,
       subject: email_subject,
-      text: email_text
+      text: text_voter
   }
 
   mailgun.messages().send(voterEmail, function (error, body) {
@@ -174,30 +179,57 @@ app.post('/polls', (req, res) => {
 
 
 app.post('/polls/:id', (req, res) => {
-  // const rankAdd = req.body.rankArray.map(rank =>
-  // knex('decisions')
-  //   .join('voters', 'decisions.id', '=', 'voters.decision_id')
-  //   .join('options', 'decisions.id', '=', 'options.decision_id')
-  //   .select('*')
-  //   .where({
-  //     voter_url: req.params.id,
-  //     id: req.body.option_id
-  //   })
-  //   // .increment({'total_rank' rank})
-  // )};
-  // return rankAdd;
-  // res.redirect("/polls/results/" + req.body.admin_url);
-});
-// sum rank together
-// knex update to update value
-  // title: subwya rank: 5
-  // const rankPromise = req.body.'rankArray'.map(option => knex
-  // })
-  // .then (function(voteResults) {
+  console.log('click works');
+  console.log(req.body)
+// decision_id: decisionObject.id,
+//           option_id: optionsList[i].id,
+//           rank: optionsList.length - i
 
-  //   knex('options')
-  //     .where()
-  //     .insert({})
+  rankArray.map(addRank =>
+    knex('options')
+      .join('decisions', 'decisions.id', '=', 'options.decision_id')
+      .join('voters', 'decisions.id', '=', 'voters.decision_id')
+      .select('*')
+      .where({
+        voter_url: req.params.id,
+        id: req.body.option_id
+      })
+      // .increment('total_rank', addRank.rank)
+  );
+
+  let admin_text = 'Check now for your new status at: localhost8080:/polls/result/' + admin_url
+  var adminEmail = {
+      from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
+      to: email_admin,
+      subject: 'Your poll has been updated',
+      text: admin_url
+    }
+  mailgun.messages().send(adminEmail, function (error, body) {
+    console.log(body);
+  });
+  // return rankAdd; 
+  res.redirect("/polls/results/" + req.body.admin_url);
+});
+
+
+let rankArray = [{option_id: 91, rank: 5}, {option_id: 92, rank: 10}]
+
+  rankArray.map(addRank =>
+    knex.from('options')
+      .select('*')
+      .join('decisions', 'decisions.id', '=', 'options.decision_id')
+      .join('voters', 'decisions.id', '=', 'voters.decision_id')
+      .where('options.id', '=', addRank.option_id)
+        // voter_url: req.params.id,
+      //   'options.id': addRank.option_id
+      // })
+      .increment('total_rank', addRank.rank)
+    .then((rows) => {
+      console.log(rows)
+    })
+  );
+  // console.log(rankArray);
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

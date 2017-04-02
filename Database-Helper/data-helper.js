@@ -14,11 +14,11 @@ const knexLogger  = require('knex-logger');
     .select()
     // .where()
     .then(function(result) {
-    for (var i = 0; i < result.length; i++) {
-      let currentPoll = result[i];
-      console.log(result[i])
+    // for (var i = 0; i < result.length; i++) {
+    //   let currentPoll = result[i];
+      console.log(result)
       // console.log(result[i].input);
-    }
+    // }
   }).finally(knex.destroy);
 // }
 
