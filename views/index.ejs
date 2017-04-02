@@ -4,13 +4,16 @@
   <title>Decision Maker</title>
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta charset="utf-8">
+
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.ui.timepicker.addon/1.4.5/jquery-ui-timepicker-addon.css">
+   <!-- path for localhost:8080 -->
    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
    <link rel="stylesheet" href="/css/reset.css" media="screen">
-  <!-- <link rel="stylesheet" href="/css/timepicki.css" media="screen"> -->
+   <link rel="stylesheet" href="/css/timepicki.css" media="screen">
    <!-- for local test only -->
    <link rel="stylesheet" href="../public/css/bootstrap.min.css" media="screen">
    <link rel="stylesheet" href="../public/css/reset.css" media="screen">
-   <!-- <link rel="stylesheet" href="../public/css/timepicki.css" media="screen"> -->
+   <link rel="stylesheet" href="../public/css/timepicki.css" media="screen">
 </head>
 <body>
   <div class="jumbotron under-navbar">
@@ -29,7 +32,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <div class="well">
           <form class="create-decision-form form-horizontal" action="/polls" method="POST">
 
@@ -60,7 +63,7 @@
               <div class="form-group">
                 <label for="decision-time" class="col-lg-2 control-label">End Time</label>
                 <div class="col-lg-10">
-                  <input type="text" name="timepicker" class="form-control decision-time" placeholder="Please enter a number between 1- 60 ">
+                  <input type="text" name="timepicker" id="timepicker" class="form-control decision-time" />
                   <span class="decision-time-validation flash-message"></span>
                 </div>
               </div>
@@ -92,7 +95,7 @@
               </div>
 
               <div class="form-group">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                   <div class="more_button">
                       <button type="button" class="btn tn btn-primary add-option-button">Need more options?</button>
                   </div>
@@ -137,7 +140,7 @@
                   <span class="help-block">Any thing you might want to inculde in the email that send to voters</span> </div>
               </div>
               <div class="form-group">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                       <p>
                         <button type="submit" class="btn btn-default btn-lg btn-block submit-poll-button">Submit</button>
                       </p>
@@ -154,6 +157,8 @@
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui.timepicker.addon/1.4.5/jquery-ui-timepicker-addon.js"></script>
+<!-- path for localhost:8080 -->
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="/scripts/respond.min.js"></script>
 <script type="text/javascript" src="/scripts/create-decision.js"></script>
@@ -167,7 +172,7 @@
 <script type="text/javascript" src="../public/scripts/create-decision.js"></script>
 <script type="text/javascript" src="../public/scripts/holder.js"></script>
 <script type="text/javascript" src="../public/scripts/addMore.js"></script>
-<!-- <script type="text/javascript" src="../public/scripts/timepicki.js"></script> -->
+<script type="text/javascript" src="../public/scripts/timepicki.js"></script>
 
 </body>
 </html>

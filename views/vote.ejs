@@ -4,9 +4,11 @@
 <title>Decision Maker - vote page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
+<!-- <for local test only> -->
 <link rel="stylesheet" href="../public/css/bootstrap.min.css" media="screen">
 <link rel="stylesheet" href="../public/css/reset.css" media="screen">
 <link rel="stylesheet" href="../public/css/time.css" media="screen">
+<!-- localhost:8080 -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
 <link rel="stylesheet" href="/css/reset.css" media="screen">
 <link rel="stylesheet" href="/css/time.css" media="screen">
@@ -21,6 +23,7 @@
       </p>
       <div>
       <span class="decision-admin-email-display"></span>
+      <p class="countdown-time"></p>
       </div>
 
     </div>
@@ -28,55 +31,56 @@
 
   <!-- Countdown Clock -->
   <div class="container countdown-clock">
-    <div class="bs-docs-section">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h1>Countdown Clock</h1>
-            <div id="clockdiv">
-              <div>
-                <span class="days"></span>
-                <div class="smalltext">Days</div>
-              </div>
-              <div>
-                <span class="hours"></span>
-                <div class="smalltext">Hours</div>
-              </div>
-              <div>
-                <span class="minutes"></span>
-                <div class="smalltext">Minutes</div>
-              </div>
-              <div>
-                <span class="seconds"></span>
-                <div class="smalltext">Seconds</div>
-              </div>
-            </div>
-          </div>
+   <div class="bs-docs-section">
+     <div class="row">
+       <div class="col-lg-12">
+         <div class="alert alert-success">
+           <button type="button" class="close" data-dismiss="alert">&times;</button>
+           <h1 class="countdown-h1">Countdown Clock</h1>
+           <div id="clockdiv">
+             <div>
+               <span class="days"></span>
+               <div class="smalltext">Days</div>
+             </div>
+             <div>
+               <span class="hours"></span>
+               <div class="smalltext">Hours</div>
+             </div>
+             <div>
+               <span class="minutes"></span>
+               <div class="smalltext">Minutes</div>
+             </div>
+             <div>
+               <span class="seconds"></span>
+               <div class="smalltext">Seconds</div>
+             </div>
+           </div>
+         </div>
         </div>
       </div>
     </div>
-  </div>
+ </div>
+
 
 <!-- vote message -->
-  <div class="container">
-    <div class="bs-docs-section">
-    </div>
-
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="panel panel-default">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Poll Title</h2>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">Poll Title</h3>
+            <h3 class="panel-title decision-title-display"></h3>
           </div>
-          <h3 class="panel-body decision-title-display">
-          </h3>
-          <div class="col-lg-12">
-            <p class="decision-message-display">Message</p>
+          <div class="panel-body">
+            <h5 class="decision-message-display"></h5>
           </div>
         </div>
       </div>
-    </div>
+  </div>
 
 <!-- vote options - sortable -->
 
@@ -87,12 +91,12 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-12">
           <ul class="list-group " id="sortable">
           </ul>
       </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-12">
       <p>
         <button type="submit" class="btn btn-default btn-lg btn-block submit-vote-button">Submit</button>
       </p>
@@ -107,15 +111,21 @@
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>  <!-- TELL ELLEN THAT THIS SCRIPT TAG is NEEDED-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!-- TELL ELLEN THAT THIS SCRIPT TAG is NEEDED-->
+<!-- for local test only -->
 <script src="../public/scripts/bootstrap.min.js"></script>
 <script src="../public/scripts/respond.min.js"></script>
 <script src="../public/scripts/time.js"></script>
 <script src="../public/scripts/poll-vote.js"></script>
-<!-- for local test only -->
+<script src="../public/scripts/jquery.countdown.js"></script>
+<script src="../public/scripts/addMore.js" type="text/javascript" ></script>
+<!-- path for localhost:8080 -->
 <script src="/scripts/bootstrap.min.js"></script>
 <script src="/scripts/respond.min.js"></script>
 <script src="/scripts/holder.js"></script>
 <script src="/scripts/time.js"></script>
+<script src="/scripts/jquery.countdown.js"></script>
+<script src="/scripts/addMore.js" type="text/javascript" ></script>
+
 
 </body>
 </html>

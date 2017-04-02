@@ -36,14 +36,10 @@ $(document).ready(function() {
     v.preventDefault(); $(this).parent('div').parent('div').parent('div').remove(); y--;
   });
 
+// timepicki
+  $('#timepicker').timepicki();
 
-  // time picker function
 
-  // $(".decision-time").timepicki({
-  //   show_meridian:false,
-  //   min_hour_value:0,
-  //   max_hour_value:23
-  // });
 
 
 

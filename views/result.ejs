@@ -4,6 +4,7 @@
 <title>Decision Maker - result</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
+<!-- localhost:8080 -->
 <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
 <link rel="stylesheet" href="/css/reset.css" media="screen">
 <link rel="stylesheet" href="/css/time.css" media="screen">
@@ -18,19 +19,23 @@
   <div class="container">
     <h1>Decision Maker</h1>
     <p>This poll is created by:</p>
-      <span class="decision-admin-name-display">decision-admin-name-display</span>
-      <span class="decision-admin-email-display">decision-admin-email-display</span>
+    <h3 class="decision-admin-name-display"></h3>
+    <h4 class="decision-admin-email-display"></h4>
+    <!-- <p class="countdown-time">0:00</p> -->
+
   </div>
 </div>
+
+<!-- count down -->
 
 <!-- Countdown Clock -->
 <div class="container countdown-clock">
   <div class="bs-docs-section">
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-12">
         <div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <h1>Countdown Clock</h1>
+          <h1 class="countdown-h1">Countdown Clock</h1>
           <div id="clockdiv">
             <div>
               <span class="days"></span>
@@ -55,35 +60,38 @@
   </div>
 </div>
 
+<!-- vote message -->
 <div class="container">
-  <div class="bs-docs-section">
-    <div class="row">
-      <div class="col-lg-12">
-        <h2>Message</h2>
-      </div>
-    </div>
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-12">
+      <h2>Poll Title</h2>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
       <div class="panel panel-default">
-        <div class="panel-heading">
-
-          <h3 class="panel-title decision-title-display">decision-title-display</h3>
-        </div>
-        <div class="panel-body decision-message-display">
-          <p>decision-message-display</p>
+          <div class="panel-heading">
+            <h3 class="panel-title decision-title-display">decision-title-display</h3>
+          </div>
+          <div class="panel-body">
+            <h5 class=" decision-message-display">decision-message-display</h5>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
   </div>
+    <!-- vote result -->
   <div class="bs-docs-section">
     <div class="row">
       <div class="col-lg-12">
         <div class="page-header">
           <h1 id="progress">Vote Status</h1>
+          <!-- vote count -->
+          <ul class="nav nav-pills">
+            <li class="active"><a href="#progress">Voted :  <span class="badge voter-count"></span></a></li>
+          </ul>
         </div>
-        <div class="options">
-          <h3 id="progress-striped">Subway</h3>
+        <div class="options" id="resultWrapper">
+          <h3 class="option-title-display" id="' + decisionObject.optionsArray[i].id + '">Subway</h3>
           <div class="progress progress-striped" style="margin-bottom: 9px;">
             <div class="progress-bar progress-bar-info" style="width: 20%"></div>
           </div>
@@ -105,25 +113,19 @@
   </div>
   <br />
   <br />
-  <!-- <footer>
-    <div class="row">
-      <div class="col-lg-12">
-        <p class="pull-right"><a href="#top">Back to top</a></p>
-        <p>Made by <a href="http://himpfen.com/">Brandon Himpfen</a> using <a href="http://getbootstrap.com/">Bootstrap</a>.
-          Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>.</p>
-      </div>
-    </div>
-  </footer> -->
 </div>
 <script src="http://code.jquery.com/jquery.min.js"></script>
+<!-- localhost:8080 -->
 <script src="/scripts/bootstrap.min.js"></script>
 <script src="/scripts/respond.min.js"></script>
 <script src="/scripts/holder.js"></script>
 <script src="/scripts/time.js"></script>
+<script src="/scripts/addMore.js" type="text/javascript"></script>
 <!-- <for local test only> -->
 <script src="../public/scripts/bootstrap.min.js"></script>
 <script src="../public/scripts/respond.min.js"></script>
 <script src="../public/scripts/holder.js"></script>
 <script src="../public/scripts/time.js"></script>
+<script src="../public/scripts/addMore.js" type="text/javascript" ></script>
 </body>
 </html>
