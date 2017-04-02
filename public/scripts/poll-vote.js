@@ -90,9 +90,9 @@
 
       for (var i = 0; i < optionsList.length; i++) {
         var pollObject = {
-          voter_id: decisionObject.voter.voter_id,
+          decision_id: decisionObject.id,
           option_id: optionsList[i].id,
-          base_rank: optionsList.length - i
+          rank: optionsList.length - i
         };
         pollObjectArray.push(pollObject);
       }
