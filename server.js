@@ -72,7 +72,19 @@ app.get("/polls/result/:id", (req, res) => {
 
 
 app.get("/polls/:id", (req, res) => {
-  console.log(req.params.id);
+  const voterCheck =  knex('decisions')
+    .join('voters', 'decisions.id', '=', 'voters.decision_id')
+    .join('options', 'decisions.id', '=', 'options.decision_id')
+    .select('*')
+  .then((row) => {
+  console.log(row);
+    row.forEach(() => {
+      if (row.voter_url !== req.params.id) {
+        res.status(404).send('This URL Does not Exist');
+      }
+    });
+  });
+  // console.log(req.params.id);
   knex('decisions')
   .join('voters', 'decisions.id', '=', 'voters.decision_id')
   .join('options', 'decisions.id', '=', 'options.decision_id')
@@ -81,9 +93,9 @@ app.get("/polls/:id", (req, res) => {
     voter_url: req.params.id
   })
   .then (function(voteChoices) {
-    console.log(voteChoices)
+    // console.log(voteChoices)
     let voteData = {votePage: voteChoices};
-    console.log(voteData);
+    // console.log(voteData);
   res.status(200).render("vote", voteData);
   });
 });
