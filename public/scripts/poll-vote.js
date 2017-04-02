@@ -24,7 +24,7 @@
       admin_url: '',
       title: 'Lunch',
       message: 'What should I eat for lunch?',
-      time: 1491081939, // this is a holder dummy value which is poll created time (in seconds) + poll length time (in seconds)
+      time: 1491081939, // this is a holder dummy value which is poll created time (in seconds) + poll length time (in seconds). Tell Ben about this.
       optionsArray:   [{
         id: 1,
         title: 'Subway',
