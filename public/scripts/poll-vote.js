@@ -7,6 +7,8 @@
   // $( () => {
 
   //   //As soon as the page is loaded - the HTML UI that gets created on the page will be sortable
+  //   console.log("This is from poll-vote" + voteChoices)
+
   //   $( "#sortable" ).sortable();
   //   $( "#sortable" ).disableSelection();
 
@@ -126,11 +128,11 @@
   //     // ---- Server redirects if the Voter URL is accessed again to the Admin URL
   // });
 
-  $( () => {
-    $.ajax({
-      method: 'GET',
-      url: 'polls/json/'
-    }).done(function (voteChoiuces) {
-      console.log(voteChoices);
-    });
-  });
+  // $( () => {
+  //   $.ajax({
+  //     method: 'GET',
+  //     url: '/' + voterUrl + '/json'
+  //   }).done(function (voteChoices) {
+  //     console.log(voteChoices[0]);
+  //   });
+  // });

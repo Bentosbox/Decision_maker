@@ -72,7 +72,37 @@ app.get("/polls/result/:id", (req, res) => {
 
 
 app.get("/polls/:id", (req, res) => {
-  console.log(req.params.id);
+  // const voterCheck =  knex('decisions')
+  //   .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  //   .join('options', 'decisions.id', '=', 'options.decision_id')
+  //   .select('*')
+  // .then((row) => {
+  // console.log(row);
+  //   row.forEach(() => {
+  //     if (row.voter_url !== req.params.id) {
+  //       res.status(404).send('This Poll Link Does Not Exist');
+  //     }
+  //   });
+  // });
+  // console.log(req.params.id);
+  // knex('decisions')
+  // .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  // .join('options', 'decisions.id', '=', 'options.decision_id')
+  // .select('*')
+  // .where({
+  //   voter_url: req.params.id
+  // })
+  // .then (function(voteChoices) {
+  //   let voteData = {votePage: JSON.stringify(voteChoices)};
+  //   // console.log(voteData);
+  //   console.log(voteData.votePage);
+
+  res.status(200).render("vote", {voter_url: req.params.id});
+  // });
+});
+
+app.get('/:id/json', (req, res) => {
+  // console.log(req.params.id)
   knex('decisions')
   .join('voters', 'decisions.id', '=', 'voters.decision_id')
   .join('options', 'decisions.id', '=', 'options.decision_id')
@@ -81,8 +111,11 @@ app.get("/polls/:id", (req, res) => {
     voter_url: req.params.id
   })
   .then (function(voteChoices) {
-    console.log(voteChoices)
-  res.status(200).render("vote", voteChoices);
+    // let voteData = {votePage: JSON.stringify(voteChoices)};
+    // console.log(voteData);
+  console.log('success on Json: ' + JSON.stringify(voteChoices));
+  res.json(voteChoices);
+  // res.render("index");
   });
 });
 
@@ -210,7 +243,7 @@ app.post('/polls/:id', (req, res) => {
 });
 
 
-let rankArray = [{option_id: 91, rank: 5}, {option_id: 92, rank: 10}]
+let rankArray = [{option_id: 91, rank: 1}, {option_id: 92, rank: 1}]
 
   rankArray.map(addRank =>
     knex.from('options')
