@@ -169,7 +169,7 @@ app.post('/polls', (req, res) => {
     console.log(body);
   });
 
-  // res.redirect("/polls/result/" + req.body.admin_url);
+  res.redirect("/polls/result/" + req.body.admin_url);
 });
 
 
