@@ -139,6 +139,7 @@ $(() => {
           data: decisionObject // sending decisionObjec to server
         }).done(function() {
           console.log('ajax call for posting to /polls is a success'); // check if any code needs to be executed when ajax post is done
+          window.location.href="/polls/result/" + decisionObject.admin_url;
         }
         ).fail(function (err) {
           console.log('failed');

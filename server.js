@@ -55,19 +55,19 @@ app.get("/polls", (req, res) => {
 });
 
 app.get("/polls/result/:id", (req, res) => {
-  knex('decisions')
-  .join('voters', 'decisions.id', '=', 'voters.decision_id')
-  .join('options', 'decisions.id', '=', 'options.decision_id')
-  .select('*')
-  .where({
-    admin_url: req.params.id
-  })
-  .then (function(voteResults) {
-    // console.log(voteResults);
-    let resultData = {resultPage: voteResults};
-    console.log(resultData);
-  res.status(200).render("result", resultData);
-  });
+  // knex('decisions')
+  // .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  // .join('options', 'decisions.id', '=', 'options.decision_id')
+  // .select('*')
+  // .where({
+  //   admin_url: req.params.id
+  // })
+  // .then (function(voteResults) {
+  //   // console.log(voteResults);
+  //   let resultData = {resultPage: voteResults};
+    console.log('success');
+  res.render("result");
+  // });
 });
 
 
@@ -131,7 +131,7 @@ app.post('/polls', (req, res) => {
         }));
       const emailsPromises = req.body.optionsArray.map(option => knex('options').returning('id').insert({title: option.title, description: option.description, decision_id: decisionId, total_rank: 0}));
       return Promise.all(votersPromises.concat(emailsPromises))
-    });
+    })
     // .finally(process.exit);
 
       // .then(function([[voterId], [optionId]]) {
@@ -152,13 +152,12 @@ app.post('/polls', (req, res) => {
       to: email.voter_email,
       subject: email_subject,
       text: email_text
-    }
+  }
 
-    mailgun.messages().send(voterEmail, function (error, body) {
-      console.log(body);
-    });
+  mailgun.messages().send(voterEmail, function (error, body) {
+    console.log(body);
   });
-
+  });
   // /ADMIN EMAIL///
   var adminEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
@@ -166,28 +165,29 @@ app.post('/polls', (req, res) => {
       subject: email_subject,
       text: text_admin
     }
+  mailgun.messages().send(adminEmail, function (error, body) {
+    console.log(body);
+  });
 
-    mailgun.messages().send(adminEmail, function (error, body) {
-      console.log(body);
-    });
-    res.redirect("/polls/results/" + req.body.admin_url);
+  // res.redirect("/polls/result/" + req.body.admin_url);
 });
 
+
 app.post('/polls/:id', (req, res) => {
-  const rankAdd = req.body.rankArray.map(rank =>
-  knex('decisions')
-    .join('voters', 'decisions.id', '=', 'voters.decision_id')
-    .join('options', 'decisions.id', '=', 'options.decision_id')
-    .select('*')
-    .where({
-      voter_url: req.params.id,
-      id: req.body.option_id
-    })
-    .increment({'total_rank', rank})
-  )};
-  return rankAdd;
-  res.redirect("/polls/results/" + req.body.admin_url)
-})
+  // const rankAdd = req.body.rankArray.map(rank =>
+  // knex('decisions')
+  //   .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  //   .join('options', 'decisions.id', '=', 'options.decision_id')
+  //   .select('*')
+  //   .where({
+  //     voter_url: req.params.id,
+  //     id: req.body.option_id
+  //   })
+  //   // .increment({'total_rank' rank})
+  // )};
+  // return rankAdd;
+  // res.redirect("/polls/results/" + req.body.admin_url);
+});
 // sum rank together
 // knex update to update value
   // title: subwya rank: 5
