@@ -96,8 +96,9 @@ app.get("/polls/:id", (req, res) => {
   //   let voteData = {votePage: JSON.stringify(voteChoices)};
   //   // console.log(voteData);
   //   console.log(voteData.votePage);
-
-  res.status(200).render("vote", {voter_url: req.params.id});
+  let urlData = req.params.id;
+  console.log(urlData);
+  res.status(200).render("vote", {voter_url: urlData});
   // });
 });
 
