@@ -72,18 +72,26 @@ app.get("/polls/result/:id", (req, res) => {
 
 
 app.get("/polls/:id", (req, res) => {
-  // const voterCheck =  knex('decisions')
-  //   .join('voters', 'decisions.id', '=', 'voters.decision_id')
-  //   .join('options', 'decisions.id', '=', 'options.decision_id')
-  //   .select('*')
-  // .then((row) => {
-  // console.log(row);
-  //   row.forEach(() => {
-  //     if (row.voter_url !== req.params.id) {
-  //       res.status(404).send('This Poll Link Does Not Exist');
-  //     }
-  //   });
-  // });
+  const voterCheck =  knex('decisions')
+    .join('voters', 'decisions.id', '=', 'voters.decision_id')
+    .join('options', 'decisions.id', '=', 'options.decision_id')
+    .select('voter_url')
+  .then((row) => {
+    let success = false
+    // console.log(row);
+    row.forEach((row) => {
+      if (row.voter_url === req.params.id) {
+        success = true
+      }
+    });
+    console.log(success);
+    if (success) {
+      let urlData = req.params.id;
+      console.log(urlData);
+      res.status(200).render("vote", {voter_url: urlData});
+    } else {
+      res.status(404).send('This Poll Link Does Not Exist');
+    };
   // console.log(req.params.id);
   // knex('decisions')
   // .join('voters', 'decisions.id', '=', 'voters.decision_id')
@@ -96,9 +104,8 @@ app.get("/polls/:id", (req, res) => {
   //   let voteData = {votePage: JSON.stringify(voteChoices)};
   //   // console.log(voteData);
   //   console.log(voteData.votePage);
-  let urlData = req.params.id;
-  console.log(urlData);
-  res.status(200).render("vote", {voter_url: urlData});
+  // }
+  });
   // });
 });
 
@@ -216,7 +223,10 @@ app.post('/polls/:id', (req, res) => {
 // decision_id: decisionObject.id,
 //           option_id: optionsList[i].id,
 //           rank: optionsList.length - i
+// include admin url
+// title
 
+  // admin_url
   rankArray.map(addRank =>
     knex('options')
       .join('decisions', 'decisions.id', '=', 'options.decision_id')
@@ -244,22 +254,22 @@ app.post('/polls/:id', (req, res) => {
 });
 
 
-let rankArray = [{option_id: 91, rank: 1}, {option_id: 92, rank: 1}]
+// let rankArray = [{option_id: 91, rank: 1}, {option_id: 92, rank: 1}]
 
-  rankArray.map(addRank =>
-    knex.from('options')
-      .select('*')
-      .join('decisions', 'decisions.id', '=', 'options.decision_id')
-      .join('voters', 'decisions.id', '=', 'voters.decision_id')
-      .where('options.id', '=', addRank.option_id)
-        // voter_url: req.params.id,
-      //   'options.id': addRank.option_id
-      // })
-      .increment('total_rank', addRank.rank)
-    .then((rows) => {
-      console.log(rows)
-    })
-  );
+  // rankArray.map(addRank =>
+  //   knex.from('options')
+  //     .select('*')
+  //     .join('decisions', 'decisions.id', '=', 'options.decision_id')
+  //     .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  //     .where('options.id', '=', addRank.option_id)
+  //       // voter_url: req.params.id,
+  //     //   'options.id': addRank.option_id
+  //     // })
+  //     .increment('total_rank', addRank.rank)
+  //   .then((rows) => {
+  //     console.log(rows)
+  //   })
+  // );
   // console.log(rankArray);
 
 

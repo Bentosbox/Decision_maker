@@ -132,6 +132,6 @@
       method: 'GET',
       url: '/' + voterURL + '/json'
     }).done(function (voteChoices) {
-      console.log(voteChoices[0]);
+      console.log(voteChoices);
     });
   });
