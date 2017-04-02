@@ -1,38 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Decision Maker</title>
+<title>Decision Maker - result</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
+<link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
+<link rel="stylesheet" href="/css/reset.css" media="screen">
+<link rel="stylesheet" href="/css/time.css" media="screen">
+   <!-- <for local test only> -->
 <link rel="stylesheet" href="../public/css/bootstrap.min.css" media="screen">
 <link rel="stylesheet" href="../public/css/reset.css" media="screen">
+<link rel="stylesheet" href="../public/css/time.css" media="screen">
 </head>
 <body>
 
 <div class="jumbotron under-navbar">
   <div class="container">
     <h1>Decision Maker</h1>
-    <p>This is a decision maker to help a group to decide things.</p>
+    <p>This poll is created by:</p>
+      <span class="decision-admin-name-display">decision-admin-name-display</span>
+      <span class="decision-admin-email-display">decision-admin-email-display</span>
   </div>
 </div>
-<div class="container">
+
+<!-- Countdown Clock -->
+<div class="container countdown-clock">
   <div class="bs-docs-section">
-  </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <h2>Message</h2>
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <h1>Countdown Clock</h1>
+          <div id="clockdiv">
+            <div>
+              <span class="days"></span>
+              <div class="smalltext">Days</div>
+            </div>
+            <div>
+              <span class="hours"></span>
+              <div class="smalltext">Hours</div>
+            </div>
+            <div>
+              <span class="minutes"></span>
+              <div class="smalltext">Minutes</div>
+            </div>
+            <div>
+              <span class="seconds"></span>
+              <div class="smalltext">Seconds</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
+
+<div class="container">
+  <div class="bs-docs-section">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2>Message</h2>
+      </div>
+    </div>
   <div class="row">
     <div class="col-lg-4">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Where for LUNCH?</h3>
+
+          <h3 class="panel-title decision-title-display">decision-title-display</h3>
         </div>
-        <div class="panel-body">
-          <p>Panel content</p>
+        <div class="panel-body decision-message-display">
+          <p>decision-message-display</p>
         </div>
       </div>
+    </div>
     </div>
   </div>
   <div class="bs-docs-section">
@@ -41,30 +82,12 @@
         <div class="page-header">
           <h1 id="progress">Vote Status</h1>
         </div>
-        <div class="options">
-          <h3 id="progress-striped">Subway</h3>
-          <div class="progress progress-striped" style="margin-bottom: 9px;">
-            <div class="progress-bar progress-bar-info" style="width: 20%"></div>
-          </div>
-          <h3 id="progress-striped">meat and bread</h3>
-          <div class="progress progress-striped" style="margin-bottom: 9px;">
-            <div class="progress-bar progress-bar-success" style="width: 40%"></div>
-          </div>
-          <h3 id="progress-striped">Edo</h3>
-          <div class="progress progress-striped" style="margin-bottom: 9px;">
-            <div class="progress-bar progress-bar-warning" style="width: 60%"></div>
-          </div>
-          <h3 id="progress-striped">Ramen bar</h3>
-          <div class="progress progress-striped">
-            <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
-          </div>
+        <div class="options" id="resultWrapper">
         </div>
       </div>
     </div>
   </div>
-  <br />
-  <br />
-  <footer>
+  <!-- <footer>
     <div class="row">
       <div class="col-lg-12">
         <p class="pull-right"><a href="#top">Back to top</a></p>
@@ -72,11 +95,18 @@
           Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>.</p>
       </div>
     </div>
-  </footer>
+  </footer> -->
 </div>
 <script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="/scripts/bootstrap.min.js"></script>
+<script src="/scripts/respond.min.js"></script>
+<script src="/scripts/holder.js"></script>
+<script src="/scripts/time.js"></script>
+<!-- <for local test only> -->
 <script src="../public/scripts/bootstrap.min.js"></script>
 <script src="../public/scripts/respond.min.js"></script>
 <script src="../public/scripts/holder.js"></script>
+<script src="../public/scripts/poll-status.js"</script>
+<script src="../public/scripts/time.js"></script>
 </body>
 </html>

@@ -10,18 +10,13 @@
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
 
-    //Page needs to render the following depending on the URL
-      // - Decision Admin Email; Decision Admin Name (optional); and Decision Title texts (not editable);
-      // - List of other voters for the same poll
-      // - By Default Options Appear as Drag and Drop in Table that User Can Move Around to Rank the Options (##### This needs to be implemented ######)
-      // - Submit Vote Button
 
-      //SERVER -- Tell Ben that we will need a Decision Object with Decision Values + Option Values
+    //SERVER -- Tell Ben that we will need a Decision Object with Decision Values + Option Values
 
     //var decisionObject = getDecisionObject('voterURL'); //Server side function that needs to return the Decision Object based on URL provided
     // Object could be received using a res.send method as well - Talk to Ben
 
-    //DUMMY OBJECT
+    //DUMMY OBJECT FOR TESTING
     var decisionObject = {
       id: '1',
       admin_email: 'vinaybalaji@gmail.com',
@@ -29,7 +24,7 @@
       admin_url: '',
       title: 'Lunch',
       message: 'What should I eat for lunch?',
-      time: '20 minutes left',
+      time: 1491081939, // this is a holder dummy value which is poll created time (in seconds) + poll length time (in seconds). Tell Ben about this.
       optionsArray:   [{
         id: 1,
         title: 'Subway',
@@ -54,11 +49,30 @@
     };
 
 
+
+    //Page needs to render the following depending on the URL
+      // - Decision Admin Email; Decision Admin Name (optional); and Decision Title texts (not editable);
+      // - List of other voters for the same poll
+      // - By Default Options Appear as Drag and Drop in Table that User Can Move Around to Rank the Options (##### This needs to be implemented ######)
+      // - Submit Vote Button
+
+    $('.decision-admin-name-display').text(decisionObject.admin_name);
+    $('.decision-admin-email-display').text(decisionObject.admin_email);
+    $('.decision-title-display').text(decisionObject.title);
+    $('.decision-message-display').text(decisionObject.message);
+
+    //Need to call a function from Ellen's JS files that will pass this value (which is current time (in seconds) - poll created time (in seconds) + poll length time (in seconds))
+        // var timeLifeInSeconds = Math.round(Date.now()/1000) - decisionObject.time;
+
+
+
     //Render the relevant information from the decisionObject object in the browser (check if Ellen can help)
+
+
     var optionWrapper = $('#sortable');
 
     for (var i = 0; i < decisionObject.optionsArray.length; i++) {
-      optionWrapper.append('<li class="ui-state-default"><span class="option-title-display" id ="' + decisionObject.optionsArray[i].id + '">' + decisionObject.optionsArray[i].title + '</span></li>');
+      optionWrapper.append('<li class="list-group-item option-title-display" id="' + decisionObject.optionsArray[i].id + '"><span class="badge option-description-display">' + decisionObject.optionsArray[i].description + '</span>' + decisionObject.optionsArray[i].title + '</li></div>');
     }
 
 
@@ -76,9 +90,9 @@
 
       for (var i = 0; i < optionsList.length; i++) {
         var pollObject = {
-          voter_id: decisionObject.voter.voter_id,
+          decision_id: decisionObject.id,
           option_id: optionsList[i].id,
-          base_rank: optionsList.length - i
+          rank: optionsList.length - i
         };
         pollObjectArray.push(pollObject);
       }
@@ -111,5 +125,3 @@
       // ---- Server gets the decision_id and option_id using the URL string
       // ---- Server redirects if the Voter URL is accessed again to the Admin URL
   });
-
-

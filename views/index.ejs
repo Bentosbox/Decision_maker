@@ -6,6 +6,9 @@
    <meta charset="utf-8">
    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
    <link rel="stylesheet" href="/css/reset.css" media="screen">
+   <!-- for local test only -->
+   <link rel="stylesheet" href="../public/css/bootstrap.min.css" media="screen">
+   <link rel="stylesheet" href="../public/css/reset.css" media="screen">
 </head>
 <body>
   <div class="jumbotron under-navbar">
@@ -33,7 +36,8 @@
               <div class="form-group">
                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control decision-admin-email" id="inputEmail" placeholder="Please enter your mail">
+                  <input type="email" class="form-control decision-admin-email" id="inputEmail" placeholder="Please enter your e-mail">
+                  <span class="decision-email-validation flash-message"></span>
                 </div>
               </div>
               <div class="form-group">
@@ -47,9 +51,7 @@
                 <div class="col-lg-10">
 
                   <input type="text" class="form-control decision-title" placeholder="What is this poll for?">
-
-                  <input type="text" class="form-control decision-title" id="pollSubject" placeholder="What is this poll for?">
-
+                  <span class="decision-title-validation flash-message"></span>
                 </div>
               </div>
               <!-- Date / time picker options -->
@@ -57,7 +59,7 @@
                 <label for="decision-time" class="col-lg-2 control-label">Period</label>
                 <div class="col-lg-10">
                   <input type="text" class="form-control decision-time" placeholder="Please enter when this vote will ended, in minutes">
-
+                  <span class="decision-time-validation flash-message"></span>
                 </div>
               </div>
 
@@ -68,9 +70,8 @@
                 <label class="col-lg-2 control-label" for="inputDefault">Option</label>
                 <div class="col-lg-10">
                   <input type="text" class="form-control option-title" placeholder= "Enter your option here">
+                  <span class="option-title-validation flash-message"></span>
                   <input type="text" class="form-control option-description" placeholder= "description(optional)">
-                  <span class="option-title-validation"></span>
-                  <span class="option-description-validation"></span>
                 </div>
               </div>
 
@@ -78,9 +79,10 @@
                 <label class="col-lg-2 control-label" for="inputDefault">Option</label>
                 <div class="col-lg-10">
                   <input type="text" class="form-control option-title" placeholder= "Enter your option here">
+                  <div>
+                    <span class="option-title-validation flash-message"></span>
+                  </div>
                   <input type="text" class="form-control option-description" placeholder= "description(optional)">
-                  <span class="option-title-validation"></span>
-                  <span class="option-description-validation"></span>
                 </div>
               </div>
 
@@ -102,7 +104,9 @@
               <div class="form-group">
                 <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
                 <div class="col-lg-10">
-                  <input type="text" class="form-control voter-email" placeholder= "Enter voter's email">
+                  <input type="email" class="form-control voter-email" placeholder= "Enter voter's email">
+                  <span class="voter-email-validation flash-message"></span>
+                  <input type="text" class="form-control voter-name" placeholder= "Enter voter's name(optional)">
                 </div>
               </div>
 
@@ -134,7 +138,6 @@
                 <div class="col-lg-6">
                       <p>
                         <button type="submit" class="btn btn-default btn-lg btn-block submit-poll-button">Submit</button>
-                        <button type="button" class="btn btn-warning btn-lg btn-block cancel-poll-button">Cancel</button>
                       </p>
                 </div>
               </div>
@@ -145,13 +148,6 @@
     </div>
   </div>
   <footer>
-    <div class="row">
-      <div class="col-lg-12">
-        <p class="pull-right"><a href="#top">Back to top</a></p>
-        <p>Made by <a href="http://himpfen.com/">Brandon Himpfen</a> using <a href="http://getbootstrap.com/">Bootstrap</a>.
-          Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>.</p>
-      </div>
-    </div>
   </footer>
 </div>
 
@@ -161,6 +157,13 @@
 <script type="text/javascript" src="/scripts/create-decision.js"></script>
 <script type="text/javascript" src="/scripts/holder.js"></script>
 <script type="text/javascript" src="/scripts/addMore.js"></script>
+
+<!-- for local test only -->
+<script type="text/javascript" src="../public/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="../public/scripts/respond.min.js"></script>
+<script type="text/javascript" src="../public/scripts/create-decision.js"></script>
+<script type="text/javascript" src="../public/scripts/holder.js"></script>
+<script type="text/javascript" src="../public/scripts/addMore.js"></script>
 
 </body>
 </html>
