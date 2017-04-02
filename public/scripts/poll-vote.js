@@ -126,11 +126,12 @@
   //     // ---- Server redirects if the Voter URL is accessed again to the Admin URL
   // });
 
-  // $( () => {
-  //   $.ajax({
-  //     method: 'GET',
-  //     url: '/' + voterUrl + '/json'
-  //   }).done(function (voteChoices) {
-  //     console.log(voteChoices[0]);
-  //   });
-  // });
+  $( () => {
+    console.log("this is the ajax voter url request: " + voterURL);
+    $.ajax({
+      method: 'GET',
+      url: '/' + voterURL + '/json'
+    }).done(function (voteChoices) {
+      console.log(voteChoices[0]);
+    });
+  });
