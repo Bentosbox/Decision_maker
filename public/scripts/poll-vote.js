@@ -183,21 +183,18 @@
             pollObjectArray.push(pollObject);
           }
 
-          //Console logging the poll object for testing
-          console.log(pollObjectArray.length);
-          console.log(pollObjectArray[0]);
-
           //Send pollObjectArray to SERVER --- Discuss with Ben
 
-          // $.ajax({
-          //   url: '/polls/' + voter_url,
-          //   method: 'POST',
-          //   data: pollObjectArray // sending pollObjectArray to SERVER
-          // }).done(
-          //   console.log('ajax call for posting to /polls/' + voter_url + ' is a success'); // check if any code needs to be executed when ajax post is done
-          // }).fail(function (err) {
-          //   console.log('failed');
-          // });
+          $.ajax({
+            url: '/polls/' + voterURL,
+            method: 'POST',
+            data: pollObjectArray // sending pollObjectArray to SERVER
+          }).done(
+            console.log('ajax call for posting to /polls/' + voterURL + ' is a success'); // check if any code needs to be executed when ajax post is done
+            window.location.href="/polls/result/" + decisionObject.admin_url;
+          }).fail(function (err) {
+            console.log('failed');
+          });
 
 
           // var optionsList = document.getElementsByClassName('option-title-display');
