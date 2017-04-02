@@ -24,7 +24,11 @@
       admin_url: '',
       title: 'Lunch',
       message: 'What should I eat for lunch?',
+<<<<<<< HEAD
       time: '2014-04-03T14:48:00', // this is a holder dummy value which is poll created time (in seconds) + poll length time (in seconds)
+=======
+      time: 1491081939, // this is a holder dummy value which is poll created time (in seconds) + poll length time (in seconds). Tell Ben about this.
+>>>>>>> 64566b78aa51e3ea4bae2f16a2d887c66fbc42e2
       optionsArray:   [{
         id: 1,
         title: 'Subway',
@@ -90,9 +94,9 @@
 
       for (var i = 0; i < optionsList.length; i++) {
         var pollObject = {
-          voter_id: decisionObject.voter.voter_id,
+          decision_id: decisionObject.id,
           option_id: optionsList[i].id,
-          base_rank: optionsList.length - i
+          rank: optionsList.length - i
         };
         pollObjectArray.push(pollObject);
       }
