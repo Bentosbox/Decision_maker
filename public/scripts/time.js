@@ -13,8 +13,8 @@ function getTimeRemaining(endtime) {
   };
 }
 
-function initializeClock(id, endtime) {
-  var clock = document.getElementById(id);
+function initializeClock(timepicker, endtime) {
+  var clock = document.getElementById('timepicker');
   var daysSpan = clock.querySelector('.days');
   var hoursSpan = clock.querySelector('.hours');
   var minutesSpan = clock.querySelector('.minutes');
