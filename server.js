@@ -80,7 +80,7 @@ app.get("/polls/:id", (req, res) => {
   console.log(row);
     row.forEach(() => {
       if (row.voter_url !== req.params.id) {
-        res.status(404).send('This URL Does not Exist');
+        res.status(404).send('This Poll Link Does Not Exist');
       }
     });
   });
