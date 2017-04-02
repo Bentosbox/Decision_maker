@@ -213,7 +213,7 @@
     "@jumbotron-heading-color": "#706c69",
     "@jumbotron-font-size": "ceil((@font-size-base * 1.5))",
     "@state-success-text": "#7db500",
-    "@state-success-bg": "#7db500",
+    "@state-success-bg": "rgba(155, 193, 188, 1)",
     "@state-success-border": "darken(spin(@state-success-bg, -10), 5%)",
     "@state-info-text": "#87318c",
     "@state-info-bg": "#87318c",

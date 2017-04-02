@@ -44,30 +44,30 @@
               <legend>Please enter your basic infomation</legend>
               <div class="form-group">
                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-                <div class="col-lg-10">
+                <div class="col-lg-6">
                   <input type="email" class="form-control decision-admin-email" id="inputEmail" placeholder="Please enter your e-mail">
                   <span class="decision-email-validation flash-message"></span>
                 </div>
               </div>
               <div class="form-group">
                 <label for="ownerName" class="col-lg-2 control-label">Name (optional)</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control decision-admin-name" id="ownerName" placeholder="First Name">
+                <div class="col-lg-6">
+                  <input type="text" class="form-control decision-admin-name" maxlength="255" id="ownerName" placeholder="First Name">
                 </div>
               </div>
               <div class="form-group">
                 <label for="pollSubject" class="col-lg-2 control-label">Subject</label>
                 <div class="col-lg-10">
 
-                  <input type="text" class="form-control decision-title" placeholder="What is this poll for?">
+                  <input type="text" class="form-control decision-title" maxlength="255" placeholder="What is this poll for?">
                   <span class="decision-title-validation flash-message"></span>
                 </div>
               </div>
               <!-- Date / time picker options -->
               <div class="form-group">
                 <label for="decision-time" class="col-lg-2 control-label">End Time</label>
-                <div class="col-lg-10">
-                  <input type="text" name="timepicker" id="timepicker" class="form-control decision-time" />
+                <div class="col-lg-6">
+                  <input type="number" min="1" max='999' class="form-control decision-time" id="endtime" maxlength="3" placeholder="Please enter the number of minutes you want">
                   <span class="decision-time-validation flash-message"></span>
                 </div>
               </div>
@@ -77,21 +77,21 @@
 
               <div class="form-group">
                 <label class="col-lg-2 control-label" for="inputDefault">Option</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control option-title" placeholder= "Enter your option here">
+                <div class="col-lg-6">
+                  <input type="text" class="form-control option-title" maxlength="255" placeholder= "Enter your option here">
                   <span class="option-title-validation flash-message"></span>
-                  <input type="text" class="form-control option-description" placeholder= "description(optional)">
+                  <input type="text" class="form-control option-description" maxlength="255" placeholder= "description(optional)">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-lg-2 control-label" for="inputDefault">Option</label>
-                <div class="col-lg-10">
-                  <input type="text" class="form-control option-title" placeholder= "Enter your option here">
+                <div class="col-lg-6">
+                  <input type="text" class="form-control option-title" maxlength="255" placeholder= "Enter your option here">
                   <div>
                     <span class="option-title-validation flash-message"></span>
                   </div>
-                  <input type="text" class="form-control option-description" placeholder= "description(optional)">
+                  <input type="text" class="form-control option-description" maxlength="255" placeholder= "description(optional)">
                 </div>
               </div>
 
@@ -99,7 +99,7 @@
               </div>
 
               <div class="form-group">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                   <div class="more_button">
                       <button type="button" class="btn tn btn-primary add-option-button">Need more options?</button>
                   </div>
@@ -112,10 +112,10 @@
               <legend>Who you want to invite to this vote?</legend>
               <div class="form-group">
                 <label class="col-lg-2 control-label" for="voterEmail">Voter</label>
-                <div class="col-lg-10">
-                  <input type="email" class="form-control voter-email" placeholder= "Enter voter's email">
+                <div class="col-lg-6">
+                  <input type="email" class="form-control voter-email" maxlength="255" placeholder= "Enter voter's email">
                   <span class="voter-email-validation flash-message"></span>
-                  <input type="text" class="form-control voter-name" placeholder= "Enter voter's name(optional)">
+                  <input type="text" class="form-control voter-name" maxlength="255" placeholder= "Enter voter's name(optional)">
                 </div>
               </div>
 
@@ -140,7 +140,7 @@
               <div class="form-group">
                 <label for="textArea" class="col-lg-2 control-label">Message (optional)</label>
                 <div class="col-lg-10">
-                  <textarea class="form-control decision-message" rows="3" id="textArea"></textarea>
+                  <textarea class="form-control decision-message" maxlength="255" rows="3" id="textArea"></textarea>
                   <span class="help-block">Any thing you might want to inculde in the email that send to voters</span> </div>
               </div>
               <div class="form-group">
@@ -156,20 +156,17 @@
       </div>
     </div>
   </div>
-  <footer>
-  </footer>
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.ui.timepicker.addon/1.4.5/jquery-ui-timepicker-addon.js"></script> -->
+
 <!-- path for localhost:8080 -->
 <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="/scripts/respond.min.js"></script>
 <script type="text/javascript" src="/scripts/create-decision.js"></script>
 <script type="text/javascript" src="/scripts/holder.js"></script>
 <script type="text/javascript" src="/scripts/addMore.js"></script>
-<script type="text/javascript" src="/scripts/timepicki.js"></script>
-<!-- <script type="text/javascript" src="/scripts/flipclock.js"></script> -->
+<script type="text/javascript" src="/scripts/time.js"></script>
 
 <!-- for local test only -->
 <script type="text/javascript" src="../public/scripts/bootstrap.min.js"></script>
@@ -177,8 +174,7 @@
 <script type="text/javascript" src="../public/scripts/create-decision.js"></script>
 <script type="text/javascript" src="../public/scripts/holder.js"></script>
 <script type="text/javascript" src="../public/scripts/addMore.js"></script>
-<!-- <script type="text/javascript" src="../public/scripts/flipclock.js"></script> -->
-<!-- <script type="text/javascript" src="../public/scripts/timepicki.js"></script> -->
+<script type="text/javascript" src="../public/scripts/time.js"></script>
 
 </body>
 </html>
