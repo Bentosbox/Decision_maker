@@ -82,9 +82,7 @@ app.get("/polls/:id", (req, res) => {
   })
   .then (function(voteChoices) {
     console.log(voteChoices)
-    let voteData = {votePage: voteChoices};
-    console.log(voteData);
-  res.status(200).render("vote", voteData);
+  res.status(200).render("vote", voteChoices);
   });
 });
 
