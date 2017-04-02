@@ -46,7 +46,6 @@ app.use("/api/users", usersRoutes(knex));
 
 //////////////// GET PAGES ///////////////
 
-
 app.get("/", (req, res) => {
   res.redirect("/polls");
 });
@@ -57,28 +56,32 @@ app.get("/polls", (req, res) => {
 
 app.get("/polls/result/:id", (req, res) => {
   knex('decisions')
-  .join('options', 'decisions.id', '=', 'options.decision_id')
   .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  .join('options', 'decisions.id', '=', 'options.decision_id')
   .select('*')
   .where({
     admin_url: req.params.id
   })
   .then (function(voteResults) {
+    // console.log(voteResults);
     let resultData = {resultPage: voteResults};
     console.log(resultData);
   res.status(200).render("result", resultData);
   });
 });
 
+
 app.get("/polls/:id", (req, res) => {
+  console.log(req.params.id);
   knex('decisions')
-  .join('options', 'decisions.id', '=', 'options.decision_id')
   .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  .join('options', 'decisions.id', '=', 'options.decision_id')
   .select('*')
   .where({
     voter_url: req.params.id
   })
   .then (function(voteChoices) {
+    console.log(voteChoices)
     let voteData = {votePage: voteChoices};
     console.log(voteData);
   res.status(200).render("vote", voteData);
@@ -98,7 +101,7 @@ app.post('/polls', (req, res) => {
 
   /////MAILGUN EMAIL/////
   // let text_voter = 'A poll is available at localhost8080:' + req.body.admin_url;
-  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: ' + req.body.admin_url + 'voter link: localhost8080:' + req.body.admin_url;
+  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost8080:/polls/admin' + req.body.admin_url + 'voter link: localhost8080:' + req.body.admin_url;
 
 
     //////////////// INSERT INFORMATION INTO TABLES ///////////////////
@@ -170,14 +173,21 @@ app.post('/polls', (req, res) => {
     res.redirect("/polls/results/" + req.body.admin_url);
 });
 
-
 app.post('/polls/:id', (req, res) => {
+  const rankAdd = req.body.rankArray.map(rank =>
   knex('decisions')
-  .join('options', 'decisions.id', '=', 'options.decision_id')
-  .join('voters', 'decisions.id', '=', 'voters.decision_id')
-  .select('*')
-  .where('voter_url', req.params.id)
-
+    .join('voters', 'decisions.id', '=', 'voters.decision_id')
+    .join('options', 'decisions.id', '=', 'options.decision_id')
+    .select('*')
+    .where({
+      voter_url: req.params.id,
+      id: req.body.option_id
+    })
+    .increment({'total_rank', rank})
+  )};
+  return rankAdd;
+  res.redirect("/polls/results/" + req.body.admin_url)
+})
 // sum rank together
 // knex update to update value
   // title: subwya rank: 5
@@ -188,8 +198,6 @@ app.post('/polls/:id', (req, res) => {
   //   knex('options')
   //     .where()
   //     .insert({})
-})
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
