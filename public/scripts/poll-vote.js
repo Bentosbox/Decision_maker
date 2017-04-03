@@ -179,18 +179,24 @@
               decision_id: decisionObject.decision_id,
               option_id: Number(optionsList[i].id),
               rank: optionsList.length - i,
-              admin_url: decisionObject.admin_url
+              admin_url: decisionObject.admin_url,
+              admin_email: decisionObject.admin_email
             };
             pollObjectArray.push(pollObject);
           }
 
           //Send pollObjectArray to SERVER --- Discuss with Ben
 
+          var pollObjectArrayInObject = {
+            pollObjectArray: pollObjectArray
+          }
+          console.log(pollObjectArrayInObject);
+
           $.ajax({
             url: '/polls/' + voterURL,
             method: 'POST',
-            data: pollObjectArray // sending pollObjectArray to SERVER
-          }).done(
+            data: pollObjectArrayInObject // sending pollObjectArray to SERVER
+          }).done(function() {
             console.log('ajax call for posting to /polls/' + voterURL + ' is a success'); // check if any code needs to be executed when ajax post is done
             window.location.href="/polls/result/" + decisionObject.admin_url;
           }).fail(function (err) {
