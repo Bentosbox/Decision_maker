@@ -130,10 +130,10 @@
 
   $( () => {
 
-    $.ajax({
-      method: 'GET',
-      url: '/' + voterURL + '/json'
-    }).done(function (voteChoices) {
+    // $.ajax({
+    //   method: 'GET',
+    //   url: '/' + voterURL + '/json'
+    // }).done(function (voteChoices) {
       var voteArray = [];
       console.log('Connection to server via ajax Get reuqest was successful');
       for (var i=0; i<voteChoices.length; i++) {
@@ -185,16 +185,16 @@
 
           //Send pollObjectArray to SERVER --- Discuss with Ben
 
-          $.ajax({
-            url: '/polls/' + voterURL,
-            method: 'POST',
-            data: pollObjectArray // sending pollObjectArray to SERVER
-          }).done(
-            console.log('ajax call for posting to /polls/' + voterURL + ' is a success'); // check if any code needs to be executed when ajax post is done
-            window.location.href="/polls/result/" + decisionObject.admin_url;
-          }).fail(function (err) {
-            console.log('failed');
-          });
+          // $.ajax({
+          //   url: '/polls/' + voterURL,
+          //   method: 'POST',
+          //   data: pollObjectArray // sending pollObjectArray to SERVER
+          // }).done({
+          //   console.log('ajax call for posting to /polls/' + voterURL + ' is a success');
+          //   window.location.href="/polls/result/" + decisionObject.admin_url;
+          // }).fail(function (err) {
+          //   console.log('failed');
+          // });
 
 
           // var optionsList = document.getElementsByClassName('option-title-display');
@@ -203,9 +203,7 @@
           //   console.log(optionsList[i].id); // can get option_id value by setting the css id as the option_id value
           //   optionsList[i].innerText = 'Sample' + i; // this can set the value of Span tag
           // }
-        });
-
-
-    });
-
-  });
+    //     });
+    //
+    //
+    // });
