@@ -1,4 +1,4 @@
-$(document).ready(function() {
+
   function getTimeRemaining(endtime) {
     var t = Date.parse(endtime) - Date.parse(new Date());
     var seconds = Math.floor((t / 1000) % 60);
@@ -38,21 +38,26 @@ $(document).ready(function() {
     var timeinterval = setInterval(updateClock, 1000);
   }
 
+    // function getEndTimeFromInput(){
+      // let timeLimit = $('#endtime').val();
+      // console.log(typeof timeLimit, timeLimit);
+      // let numberOfMinute = parseInt(timeLimit, 10);
+      // console.log(typeof numberOfMinute, numberOfMinute);
+    // }
 
 
+  // function getEndTime(numberOfMinute) {
+  //   let deadline = new Date(Date.parse(new Date()) + numberOfMinute * 60 * 1000);
+  //   initializeClock('clockdiv', deadline);
+  // }
 
-  let timeLimit = $('#endtime').val();
-  console.log(typeof timeLimit, timeLimit);
-  let numberOfMinute = parseInt(timeLimit, 10);
-  console.log(typeof numberOfMinute, numberOfMinute);
-  let deadline = new Date(Date.parse(new Date()) + 3 * 60 * 1000);
-  initializeClock('clockdiv', deadline);
+  // module.exports = function getEndTime(numberOfMinute){
+  //   let deadline = new Date(Date.parse(new Date()) + numberOfMinute * 60 * 1000);
+  //   initializeClock('clockdiv', deadline);
+  // };
 
-});
-
-// let timeLimit = document.getElementsById('endtime').value;
-// console.log(typeof timeLimit, timeLimit);
-// let numberOfMinute = parseInt(timeLimit, 10);
-// console.log(typeof numberOfMinute, numberOfMinute);
-// let deadline = new Date(Date.parse(new Date()) + numberOfMinute * 60 * 1000);
-// initializeClock('clockdiv', deadline);
+  module.exports = function (numberOfMinute){
+    let deadline = new Date(Date.parse(new Date()) + numberOfMinute * 60 * 1000);
+    initializeClock('clockdiv', deadline);
+    // console.log('hope I can see this');
+  };

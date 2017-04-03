@@ -121,7 +121,7 @@ $(() => {
           admin_email:    $('.decision-admin-email').val(),
           admin_name:     $('.decision-admin-name').val(),
           admin_url:      makeURL(),
-          title:          $('.decision-title').val(),
+          decision_title:          $('.decision-title').val(),
           message:        $('.decision-message').val(),
           time:           $('.decision-time').val(), // Storing the poll create time (in seconds) + poll length time (in seconds)
           optionsArray:   makeOptionsArray(),
