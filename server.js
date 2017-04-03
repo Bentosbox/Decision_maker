@@ -205,7 +205,7 @@ app.post('/polls', (req, res) => {
 
   ///VOTER EMAIL///
   req.body.votersArray.forEach(function(email) {
-    let text_voter = email_text + ' A poll is available for you at localhost:8080/polls' + email.voter_url;
+    let text_voter = email_text + ' A poll is available for you at localhost:8080/polls/' + email.voter_url;
     var voterEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
       to: email.voter_email,
