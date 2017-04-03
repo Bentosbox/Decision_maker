@@ -36,25 +36,4 @@ $(document).ready(function() {
     v.preventDefault(); $(this).parent('div').parent('div').parent('div').remove(); y--;
   });
 
-// timepicki
-  // $('#timepicker').timepicki();
-
-  // clock = $('.clock').FlipClock(60, {
-  //       clockFace: 'MinuteCounter',
-  //       countdown: true,
-  //       autoStart: false,
-  //       callbacks: {
-  //         start: function() {
-  //           $('.message').html('The clock has started!');
-  //         }
-  //       }
-  //   });
-  //
-  //   $('.submit-poll-button').click(function(e) {
-  //
-  //     clock.start();
-  //   });
-
-
-
 });
