@@ -60,27 +60,27 @@ app.get("/polls", (req, res) => {
 ///////RESULTS PAGE//////////
 
 app.get("/polls/result/:id", (req, res) => {
-  const voterCheck =  knex('decisions')
-    .join('voters', 'decisions.id', '=', 'voters.decision_id')
-    .join('options', 'decisions.id', '=', 'options.decision_id')
-    .select('admin_url')
-  .then((row) => {
-    let success = false
-    console.log(row);
-    row.forEach((row) => {
-      if (row.admin_url === req.params.id) {
-        success = true
-      }
-    });
-    console.log(success);
-    if (success) {
+  // const voterCheck =  knex('decisions')
+  //   .join('voters', 'decisions.id', '=', 'voters.decision_id')
+  //   .join('options', 'decisions.id', '=', 'options.decision_id')
+  //   .select('admin_url')
+  // .then((row) => {
+  //   let success = false
+  //   console.log(row);
+  //   row.forEach((row) => {
+  //     if (row.admin_url === req.params.id) {
+  //       success = true
+  //     }
+  //   });
+  //   console.log(success);
+  //   if (success) {
       let urlData = req.params.id;
-      console.log(urlData);
+      // console.log(urlData);
       res.status(200).render("result", {admin_url: urlData});
-    } else {
-      res.status(404).send('This Poll result Link Does Not Exist');
-    };
-  });
+    // } else {
+    //   res.status(404).send('This Poll result Link Does Not Exist');
+    // };
+  // });
 
 });
 
@@ -156,7 +156,7 @@ app.post('/polls', (req, res) => {
   let email_text = req.body.message;
   let email_admin = req.body.admin_email;
   let rem_time = req.body.time;
-  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost:8080/polls/admin' + req.body.admin_url /*+ 'voter link: localhost8080:' + req.body.admin_url; */
+  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost:8080/polls/result/' + req.body.admin_url /*+ 'voter link: localhost8080:' + req.body.admin_url; */
 
     //////////////// INSERT INFORMATION INTO TABLES ///////////////////
 
@@ -205,7 +205,7 @@ app.post('/polls', (req, res) => {
 
   ///VOTER EMAIL///
   req.body.votersArray.forEach(function(email) {
-    let text_voter = email_text + ' A poll is available for you at localhost:8080 ' + email.voter_url;
+    let text_voter = email_text + ' A poll is available for you at localhost:8080/polls' + email.voter_url;
     var voterEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
       to: email.voter_email,

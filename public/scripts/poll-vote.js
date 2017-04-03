@@ -135,6 +135,49 @@
       url: '/' + voterURL + '/json'
     }).done(function (voteChoices) {
 
+      //Code to get the time remaining clock to work
+
+          function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60) % 60);
+            var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+              'total': t,
+              'days': days,
+              'hours': hours,
+              'minutes': minutes,
+              'seconds': seconds
+            };
+          }
+
+          function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var daysSpan = clock.querySelector('.days');
+            var hoursSpan = clock.querySelector('.hours');
+            var minutesSpan = clock.querySelector('.minutes');
+            var secondsSpan = clock.querySelector('.seconds');
+
+            function updateClock() {
+              var t = getTimeRemaining(endtime);
+
+              daysSpan.innerHTML = t.days;
+              hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+              minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+              secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+              if (t.total <= 0) {
+                clearInterval(timeinterval);
+              }
+            }
+
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
+          }
+
+      //Code to render the time remaining clock ends here
+
       var voteArray = [];
       console.log('Connection to server via ajax Get reuqest was successful');
       for (var i=0; i<voteChoices.length; i++) {
@@ -154,6 +197,12 @@
       $('.decision-admin-email-display').text(decisionObject.admin_email);
       $('.decision-title-display').text(decisionObject.decision_title);
       $('.decision-message-display').text(decisionObject.message);
+
+
+      //passing the time remaining value to the clock being rendered on the page
+      var endtime = decisionObject.time - Math.round(Date.now()/60000);
+      var deadline = new Date(Date.parse(new Date()) + endtime * 60 * 1000);
+      initializeClock('clockdiv', deadline);
 
         //Need to call a function from Ellen's JS files that will pass this value (which is current time (in seconds) - poll created time (in seconds) + poll length time (in seconds))
             // var timeLifeInSeconds = Math.round(Date.now()/1000) - decisionObject.time;

@@ -13,11 +13,12 @@
 function determineProgressBarRank (inputArray, value) {
   rank = inputArray.length;
   for (var i=0; i < inputArray.length; i++) {
-    if (inputArray[i] < value) {
+    if (inputArray[i] > value) {
       rank--;
     }
+
   }
-  // console.log(inputArray, value, rank)
+  console.log(inputArray, value, rank);
   return rank;
 }
 
@@ -95,6 +96,49 @@ $(() => {
 
         // ];
 
+        //Code to get the time remaining clock to work
+
+            function getTimeRemaining(endtime) {
+              var t = Date.parse(endtime) - Date.parse(new Date());
+              var seconds = Math.floor((t / 1000) % 60);
+              var minutes = Math.floor((t / 1000 / 60) % 60);
+              var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+              var days = Math.floor(t / (1000 * 60 * 60 * 24));
+              return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+              };
+            }
+
+            function initializeClock(id, endtime) {
+              var clock = document.getElementById(id);
+              var daysSpan = clock.querySelector('.days');
+              var hoursSpan = clock.querySelector('.hours');
+              var minutesSpan = clock.querySelector('.minutes');
+              var secondsSpan = clock.querySelector('.seconds');
+
+              function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                daysSpan.innerHTML = t.days;
+                hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+                if (t.total <= 0) {
+                  clearInterval(timeinterval);
+                }
+              }
+
+              updateClock();
+              var timeinterval = setInterval(updateClock, 1000);
+            }
+
+        //Code to render the time remaining clock ends here
+
         var voteArray = [];
         console.log('Connection to server via ajax Get reuqest was successful');
         for (var i=0; i<voteChoices.length; i++) {
@@ -141,6 +185,11 @@ $(() => {
           $('.decision-title-display').text(decisionObject.decision_title);
           $('.decision-message-display').text(decisionObject.message);
 
+          //passing the time remaining value to the clock being rendered on the page
+          var endtime = decisionObject.time - Math.round(Date.now()/60000);
+          var deadline = new Date(Date.parse(new Date()) + endtime * 60 * 1000);
+          initializeClock('clockdiv', deadline);
+
           $('.voter-count').text(numberOfVoters);
 
           var resultWrapper = $('#resultWrapper');
@@ -148,8 +197,8 @@ $(() => {
 
           for (var i=0; i < optionObjectArray.length; i++) {
             rankValuesArray.push(optionObjectArray[i].total_rank);
+            //console.log(rankValuesArray[i]);
           }
-
 
           for (var i=0; i < optionObjectArray.length; i++) {
             console.log('Length of optionObjectArray is: ' + optionObjectArray.length);
@@ -158,6 +207,7 @@ $(() => {
             var divClass = '"progress-bar progress-bar-info"';
 
             if ((determineProgressBarRank(rankValuesArray, optionObjectArray[i].total_rank)) === numberOfOptions) {
+              console.log(optionObjectArray[i].title, (determineProgressBarRank(rankValuesArray, optionObjectArray[i].total_rank)));
               divClass = '"progress-bar progress-bar-success"';
             }
 
