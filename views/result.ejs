@@ -4,16 +4,11 @@
 <title>Decision Maker - result</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
-<link rel="stylesheet" href="/css/bootstrap.min.css" media="screen">
-<link rel="stylesheet" href="/css/reset.css" media="screen">
-<link rel="stylesheet" href="/css/time.css" media="screen">
-   <!-- <for local test only> -->
-<link rel="stylesheet" href="../public/css/bootstrap.min.css" media="screen">
-<link rel="stylesheet" href="../public/css/reset.css" media="screen">
-<link rel="stylesheet" href="../public/css/time.css" media="screen">
-</head>
-<body>
+<link rel="stylesheet" href="/css/main.css" media="screen">
 
+<body>
+  <div class="navbar navbar-default navbar-fixed-top">
+  </div>
 <script> var adminURL = '<%= admin_url %>'; </script>
 
 <div class="jumbotron under-navbar">
@@ -29,7 +24,7 @@
 <div class="container countdown-clock">
   <div class="bs-docs-section">
     <div class="row">
-      <div class="col-lg-4">
+      <div class="col-lg-12">
         <div class="alert alert-success">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <h1>Countdown Clock</h1>
@@ -61,11 +56,11 @@
   <div class="bs-docs-section">
     <div class="row">
       <div class="col-lg-12">
-        <h2>Message</h2>
+        <h2>Poll Title</h2>
       </div>
     </div>
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-12">
       <div class="panel panel-default">
         <div class="panel-heading">
 
@@ -83,34 +78,32 @@
       <div class="col-lg-12">
         <div class="page-header">
           <h1 id="progress">Vote Status</h1>
+          <!-- vote count -->
+          <ul class="nav nav-pills">
+            <li class="active"><a href="#progress">Voted :  <span class="badge voter-count"></span></a></li>
+          </ul>
         </div>
         <div class="options" id="resultWrapper">
         </div>
       </div>
     </div>
   </div>
-  <!-- <footer>
-    <div class="row">
-      <div class="col-lg-12">
-        <p class="pull-right"><a href="#top">Back to top</a></p>
-        <p>Made by <a href="http://himpfen.com/">Brandon Himpfen</a> using <a href="http://getbootstrap.com/">Bootstrap</a>.
-          Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>.</p>
-      </div>
-    </div>
-  </footer> -->
+  <br>
+  <br>
+  <br>
+  <br>
+
 
 </div>
 <script src="http://code.jquery.com/jquery.min.js"></script>
 <script src="/scripts/bootstrap.min.js"></script>
 <script src="/scripts/respond.min.js"></script>
 <script src="/scripts/holder.js"></script>
-<script src="/scripts/poll-status.js"</script>
-<!-- <script src="/scripts/time.js"></script> -->
+<script src="/scripts/poll-status.js"></script>
 <!-- <for local test only> -->
-<script src="../public/scripts/bootstrap.min.js"></script>
+<!-- <script src="../public/scripts/bootstrap.min.js"></script>
 <script src="../public/scripts/respond.min.js"></script>
 <script src="../public/scripts/holder.js"></script>
-<script src="../public/scripts/poll-status.js"</script>
-<!-- <script src="../public/scripts/time.js"></script> -->
+<script src="../public/scripts/poll-status.js"></script> -->
 </body>
 </html>

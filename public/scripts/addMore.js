@@ -10,7 +10,7 @@ $(document).ready(function() {
     o.preventDefault();
     if(x < maxOption){
       x++;
-      $(optWrapper).append('<div class="addition-option"><div class="form-group"><label class="col-lg-2 control-label" for="inputDefault">Option</label><div class="col-lg-10"><input type="text" class="form-control option-title" placeholder= "Enter your option here"><div><span class="option-title-validation flash-message"></span></div><input type="text" class="form-control option-description" placeholder= "description(optional)"><button type="button" class="btn btn-link delete-option-button">Remove</button></div></div></div>');
+      $(optWrapper).append('<div class="addition-option"><div class="form-group"><label class="col-lg-2 control-label" for="inputDefault">Option</label><div class="col-lg-6"><input type="text" class="form-control option-title" placeholder= "Enter your option here"><div><span class="option-title-validation flash-message"></span></div><input type="text" class="form-control option-description" placeholder= "description(optional)"><button type="button" class="btn btn-link delete-option-button">Remove</button></div></div></div>');
     }
   });
 
@@ -23,12 +23,12 @@ $(document).ready(function() {
   const voterWrapper = $(".addition-voter");
   const add_voter_button = $(".add-voter-button");
 
-  let y = 2;
+  let y = 1;
   $(add_voter_button).click(function(v){
     v.preventDefault();
     if(y < maxVoter){
       y++;
-      $(voterWrapper).append('<div class="addition-voter"><div class="form-group"><label class="col-lg-2 control-label" for="voterEmail">Voter</label><div class="col-lg-10"><input type="email" class="form-control voter-email" placeholder= "Enter voter email"><div><span class="voter-email-validation flash-message"></span><input type="text" class="form-control voter-name" placeholder= "Enter voter\'s name (optional)"></div><button type="button" class="btn btn-link delete-voter-button">Remove</button></div></div></div>');
+      $(voterWrapper).append('<div class="addition-voter"><div class="form-group"><label class="col-lg-2 control-label" for="voterEmail">Voter</label><div class="col-lg-6"><input type="email" class="form-control voter-email" placeholder= "Enter voter email"><div><span class="voter-email-validation flash-message"></span><input type="text" class="form-control voter-name" placeholder= "Enter voter\'s name (optional)"></div><button type="button" class="btn btn-link delete-voter-button">Remove</button></div></div></div>');
     }
   });
 
