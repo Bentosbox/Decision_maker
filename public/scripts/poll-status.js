@@ -25,12 +25,12 @@ function determineProgressBarRank (inputArray, value) {
 $(() => {
 
 
-  setInterval(() => {
-    console.log('Refreshed');
+  // setInterval(() => {
+  //   console.log('Refreshed');
 
       $.ajax({
         method: 'GET',
-        url: '/result/' + adminURL + '/json'
+        url: adminURL + '/json'
       }).done(function (voteChoices) {
 
         //DUMMY DATA To Test Front End Logic
@@ -172,7 +172,7 @@ $(() => {
 
       });
 
-  }, 1000);
+  // }, 1000);
 
 });
 

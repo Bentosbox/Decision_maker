@@ -93,12 +93,12 @@ app.get("/polls/result/:id/json", (req, res) => {
     admin_url: req.params.id
   })
   .then (function(voteResults) {
-    console.log(voteResults);
+    // console.log(voteResults);
     // let resultData = {resultPage: voteResults};
     console.log('success');
+    res.json(voteResults);
+    console.log('success on Json: ' + JSON.stringify(voteResults));
   });
-  console.log('success on Json: ' + JSON.stringify(voteResults));
-  res.json(voteResults);
 });
 
 
