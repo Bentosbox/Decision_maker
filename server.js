@@ -156,7 +156,7 @@ app.post('/polls', (req, res) => {
   let email_text = req.body.message;
   let email_admin = req.body.admin_email;
   let rem_time = req.body.time;
-  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost8080:/polls/admin' + req.body.admin_url /*+ 'voter link: localhost8080:' + req.body.admin_url; */
+  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost:8080/polls/admin' + req.body.admin_url /*+ 'voter link: localhost8080:' + req.body.admin_url; */
 
     //////////////// INSERT INFORMATION INTO TABLES ///////////////////
 
@@ -205,7 +205,7 @@ app.post('/polls', (req, res) => {
 
   ///VOTER EMAIL///
   req.body.votersArray.forEach(function(email) {
-    let text_voter = email_text + ' A poll is available for you at localhost8080: ' + email.voter_url;
+    let text_voter = email_text + ' A poll is available for you at localhost:8080 ' + email.voter_url;
     var voterEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
       to: email.voter_email,
@@ -262,7 +262,7 @@ app.post('/polls/:id', (req, res) => {
       })
   );
 
-  let admin_text = 'Check now for your new status at: localhost8080:/polls/result/' + req.body.pollObjectArray[0].admin_url
+  let admin_text = 'Check now for your new status at: localhost:8080/polls/result/' + req.body.pollObjectArray[0].admin_url
   var adminEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
       to: req.body.pollObjectArray[0].admin_email,
