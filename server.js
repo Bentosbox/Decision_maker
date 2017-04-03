@@ -50,11 +50,41 @@ app.get("/", (req, res) => {
   res.redirect("/polls");
 });
 
+//////FRONT POLL PAGE////////
+
 app.get("/polls", (req, res) => {
   res.status(200).render("index");
 });
 
+
+///////RESULTS PAGE//////////
+
 app.get("/polls/result/:id", (req, res) => {
+  const voterCheck =  knex('decisions')
+    .join('voters', 'decisions.id', '=', 'voters.decision_id')
+    .join('options', 'decisions.id', '=', 'options.decision_id')
+    .select('admin_url')
+  .then((row) => {
+    let success = false
+    console.log(row);
+    row.forEach((row) => {
+      if (row.admin_url === req.params.id) {
+        success = true
+      }
+    });
+    console.log(success);
+    if (success) {
+      let urlData = req.params.id;
+      console.log(urlData);
+      res.status(200).render("result", {admin_url: urlData});
+    } else {
+      res.status(404).send('This Poll result Link Does Not Exist');
+    };
+  });
+
+});
+
+app.get("/polls/result/:id/json", (req, res) => {
   knex('decisions')
   .join('voters', 'decisions.id', '=', 'voters.decision_id')
   .join('options', 'decisions.id', '=', 'options.decision_id')
@@ -64,42 +94,38 @@ app.get("/polls/result/:id", (req, res) => {
   })
   .then (function(voteResults) {
     console.log(voteResults);
-    let resultData = {resultPage: voteResults};
+    // let resultData = {resultPage: voteResults};
     console.log('success');
-  res.render("result", resultData);
   });
+  console.log('success on Json: ' + JSON.stringify(voteResults));
+  res.json(voteResults);
 });
 
 
+///////VOTER PAGE/////////
+
 app.get("/polls/:id", (req, res) => {
-  // const voterCheck =  knex('decisions')
-  //   .join('voters', 'decisions.id', '=', 'voters.decision_id')
-  //   .join('options', 'decisions.id', '=', 'options.decision_id')
-  //   .select('*')
-  // .then((row) => {
-  // console.log(row);
-  //   row.forEach(() => {
-  //     if (row.voter_url !== req.params.id) {
-  //       res.status(404).send('This Poll Link Does Not Exist');
-  //     }
-  //   });
-  // });
-  // console.log(req.params.id);
-  // knex('decisions')
-  // .join('voters', 'decisions.id', '=', 'voters.decision_id')
-  // .join('options', 'decisions.id', '=', 'options.decision_id')
-  // .select('*')
-  // .where({
-  //   voter_url: req.params.id
-  // })
-  // .then (function(voteChoices) {
-  //   let voteData = {votePage: JSON.stringify(voteChoices)};
-  //   // console.log(voteData);
-  //   console.log(voteData.votePage);
-  let urlData = req.params.id;
-  console.log(urlData);
-  res.status(200).render("vote", {voter_url: urlData});
-  // });
+  const voterCheck =  knex('decisions')
+    .join('voters', 'decisions.id', '=', 'voters.decision_id')
+    .join('options', 'decisions.id', '=', 'options.decision_id')
+    .select('voter_url')
+  .then((row) => {
+    let success = false
+    // console.log(row);
+    row.forEach((row) => {
+      if (row.voter_url === req.params.id) {
+        success = true
+      }
+    });
+    console.log(success);
+    if (success) {
+      let urlData = req.params.id;
+      console.log(urlData);
+      res.status(200).render("vote", {voter_url: urlData});
+    } else {
+      res.status(404).send('This Poll Link Does Not Exist');
+    };
+  });
 });
 
 app.get('/:id/json', (req, res) => {
@@ -130,13 +156,9 @@ app.post('/polls', (req, res) => {
   let email_text = req.body.message;
   let email_admin = req.body.admin_email;
   let rem_time = req.body.time;
-  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost8080:/polls/admin' + req.body.admin_url /*+ 'voter link: localhost8080:' + req.body.admin_url; */
-
+  let text_admin = 'Thank you for using Decision Maker. Your administration and user link are as follows: localhost:8080/polls/admin' + req.body.admin_url /*+ 'voter link: localhost8080:' + req.body.admin_url; */
 
     //////////////// INSERT INFORMATION INTO TABLES ///////////////////
-////////////////WORKING TEMPLATE/////////////////////////
-
-  console.log(req.body.votersArray);
 
   knex('decisions')
     .returning('id')
@@ -183,18 +205,19 @@ app.post('/polls', (req, res) => {
 
   ///VOTER EMAIL///
   req.body.votersArray.forEach(function(email) {
-    let text_voter = email_text + ' A poll is available for you at localhost8080: ' + email.voter_url;
+    let text_voter = email_text + ' A poll is available for you at localhost:8080 ' + email.voter_url;
     var voterEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
       to: email.voter_email,
       subject: email_subject,
       text: text_voter
-  }
+    }
 
-  mailgun.messages().send(voterEmail, function (error, body) {
-    console.log(body);
+    mailgun.messages().send(voterEmail, function (error, body) {
+      console.log(body);
+    });
   });
-  });
+
   // /ADMIN EMAIL///
   var adminEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
@@ -212,35 +235,45 @@ app.post('/polls', (req, res) => {
 
 app.post('/polls/:id', (req, res) => {
   console.log('click works');
-  console.log(req.body)
+    console.log(req.body)
+    console.log(req.params.id)
+  console.log(req.body.pollObjectArray[0].admin_url)
 // decision_id: decisionObject.id,
 //           option_id: optionsList[i].id,
 //           rank: optionsList.length - i
+// include admin url
+// title
 
-  rankArray.map(addRank =>
-    knex('options')
+  // let pollObjectArray = pollObjectArrayInObject.pollObjectArray;
+
+  // admin_url
+  req.body.pollObjectArray.map(addRank =>
+    knex.from('options')
+      .select('*')
       .join('decisions', 'decisions.id', '=', 'options.decision_id')
       .join('voters', 'decisions.id', '=', 'voters.decision_id')
-      .select('*')
       .where({
-        voter_url: req.params.id,
-        id: req.body.option_id
+        'options.id': addRank.option_id,
+        // 'voters.voter_url': req.params.id
       })
-      // .increment('total_rank', addRank.rank)
+      .increment('total_rank', addRank.rank)
+      .then((rows) => {
+        console.log(rows)
+      })
   );
 
-  let admin_text = 'Check now for your new status at: localhost8080:/polls/result/' + admin_url
+  let admin_text = 'Check now for your new status at: localhost:8080/polls/result/' + req.body.pollObjectArray[0].admin_url
   var adminEmail = {
       from: 'Decision Maker <postmaster@sandbox0229991348f842509ff15dab0913c399.mailgun.org>',
-      to: email_admin,
+      to: req.body.pollObjectArray[0].admin_email,
       subject: 'Your poll has been updated',
-      text: admin_url
+      text: admin_text
     }
   mailgun.messages().send(adminEmail, function (error, body) {
     console.log(body);
   });
   // return rankAdd; 
-  res.redirect("/polls/results/" + req.body.admin_url);
+  res.redirect("/polls/result/" + req.body.pollObjectArray[0].admin_url);
 });
 
 
@@ -260,7 +293,7 @@ let rankArray = [{option_id: 91, rank: 1}, {option_id: 92, rank: 1}]
       console.log(rows)
     })
   );
-  // console.log(rankArray);
+  console.log(rankArray);
 
 
 app.listen(PORT, () => {
