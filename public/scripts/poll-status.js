@@ -13,92 +13,215 @@
 function determineProgressBarRank (inputArray, value) {
   rank = inputArray.length;
   for (var i=0; i < inputArray.length; i++) {
-    if (inputArray[i] < value) {
+    if (inputArray[i] > value) {
       rank--;
     }
+
   }
-  console.log(inputArray, value, rank)
+  console.log(inputArray, value, rank);
   return rank;
 }
 
 
 $(() => {
 
-  //DUMMY OBJECT FOR TESTING
-    var decisionObject = {
-      id: '1',
-      admin_email: 'vinaybalaji@gmail.com',
-      admin_name: 'Vinay',
-      admin_url: '',
-      title: 'Lunch',
-      message: 'What should I eat for lunch?',
-      time: 1491081939, // this is a holder dummy value which is poll created time (in seconds) + poll length time (in seconds). Tell Ben about this.
-      optionsArray:   [{
-        id: 1,
-        title: 'Subway',
-        description: 'Meatball Sub',
-        total_rank: 12
-      },
-      {
-        id: 2,
-        title: 'Sushi',
-        description: 'Bento Box',
-        total_rank: 7
-      },
-      {
-        id: 3,
-        title: 'Burger',
-        description: 'Chicken Burger',
-        total_rank: 24
-      }],
-      votersArray: [{   // Tell Ben that return decisionObject for Voter URL will only include information for that specific voter
-        voter_id: 1,
-        voter_email: 'neha@gmail.com',
-        voter_name: 'Neha',
-        voter_url: ''
-      },
-      {
-        voter_id: 2,
-        voter_email: 'abc@gmail.com',
-        voter_name: 'ABC',
-        voter_url: ''
-      }]
-    };
 
-    var numberofVoters = decisionObject.votersArray.length;
-    var numberOfOptions = decisionObject.optionsArray.length;
-    var statusBarIncrement = 100 / numberOfOptions;
+  // setInterval(() => {
+  //   console.log('Refreshed');
 
-    $('.decision-admin-name-display').text(decisionObject.admin_name);
-    $('.decision-admin-email-display').text(decisionObject.admin_email);
-    $('.decision-title-display').text(decisionObject.title);
-    $('.decision-message-display').text(decisionObject.message);
+      $.ajax({
+        method: 'GET',
+        url: adminURL + '/json'
+      }).done(function (voteChoices) {
 
-    $('.voter-count').text(numberofVoters);
+        //DUMMY DATA To Test Front End Logic
+        // var voteChoices = [
+        //   {
+        //     admin_email: "ben@mail.com",
+        //     admin_image_path: null,
+        //     admin_name: "Ben Li",
+        //     admin_url: "4xsiqwy0v6efkervbb4u",
+        //     decision_id: 22,
+        //     decision_title: "How should I go home today?",
+        //     description: "I could take the public bus",
+        //     id: 18,
+        //     message: "This is a poll to help Ben decide how he should go home today.",
+        //     option_image_path: null,
+        //     time: 1491172183,
+        //     title: "Bus",
+        //     total_rank: 1,
+        //     voter_email: "vinay@mail.com",
+        //     voter_image_path: null,
+        //     voter_name: null,
+        //     voter_url: "lgfr3xiziqt5c6bt3g1r"
+        //   },
+        //   {
+        //     admin_email: "ben@mail.com",
+        //     admin_image_path: null,
+        //     admin_name: "Ben Li",
+        //     admin_url: "4xsiqwy0v6efkervbb4u",
+        //     decision_id: 22,
+        //     decision_title: "How should I go home today?",
+        //     description: "Should I take the Skytrain?",
+        //     id: 20,
+        //     message: "This is a poll to help Ben decide how he should go home today.",
+        //     option_image_path: null,
+        //     time: 1491172183,
+        //     title: "Train",
+        //     total_rank: 2,
+        //     voter_email: "vinay@mail.com",
+        //     voter_image_path: null,
+        //     voter_name: null,
+        //     voter_url: "lgfr3xiziqt5c6bt3g1r"
+        //   },
+        //   {
+        //     admin_email: "ben@mail.com",
+        //     admin_image_path: null,
+        //     admin_name: "Ben Li",
+        //     admin_url: "4xsiqwy0v6efkervbb4u",
+        //     decision_id: 22,
+        //     decision_title: "How should I go home today?",
+        //     description: "I can bike if the weather is good",
+        //     id: 21,
+        //     message: "This is a poll to help Ben decide how he should go home today.",
+        //     option_image_path: null,
+        //     time: 1491172183,
+        //     title: "Bike",
+        //     total_rank: 3,
+        //     voter_email: "vinay@mail.com",
+        //     voter_image_path: null,
+        //     voter_name: null,
+        //     voter_url: "lgfr3xiziqt5c6bt3g1r"
+        //   }
 
-    var resultWrapper = $('#resultWrapper');
-    var rankValuesArray = [];
+        // ];
 
-    for (var i=0; i < decisionObject.optionsArray.length; i++) {
-      rankValuesArray.push(decisionObject.optionsArray[i].total_rank);
-    }
+        //Code to get the time remaining clock to work
+
+            function getTimeRemaining(endtime) {
+              var t = Date.parse(endtime) - Date.parse(new Date());
+              var seconds = Math.floor((t / 1000) % 60);
+              var minutes = Math.floor((t / 1000 / 60) % 60);
+              var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+              var days = Math.floor(t / (1000 * 60 * 60 * 24));
+              return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+              };
+            }
+
+            function initializeClock(id, endtime) {
+              var clock = document.getElementById(id);
+              var daysSpan = clock.querySelector('.days');
+              var hoursSpan = clock.querySelector('.hours');
+              var minutesSpan = clock.querySelector('.minutes');
+              var secondsSpan = clock.querySelector('.seconds');
+
+              function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                daysSpan.innerHTML = t.days;
+                hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+                if (t.total <= 0) {
+                  clearInterval(timeinterval);
+                }
+              }
+
+              updateClock();
+              var timeinterval = setInterval(updateClock, 1000);
+            }
+
+        //Code to render the time remaining clock ends here
+
+        var voteArray = [];
+        console.log('Connection to server via ajax Get reuqest was successful');
+        for (var i=0; i<voteChoices.length; i++) {
+          //console.log(voteChoices[i]);
+            voteArray.push(voteChoices[i]);
+          }
 
 
+        var decisionObject = voteArray[0];
 
-    for (var i=0; i < decisionObject.optionsArray.length; i++) {
 
-      var divClass = '"progress-bar progress-bar-info"';
+          var numberOfVoters = 0;
+          var uniqueVoterURLArray = [];
 
-      if ((determineProgressBarRank(rankValuesArray, decisionObject.optionsArray[i].total_rank)) === numberOfOptions) {
-        divClass = '"progress-bar progress-bar-success"';
-      }
+          for (var i = 0; i < voteArray.length; i++) {
+            if (uniqueVoterURLArray.includes(voteArray[i].voter_url) === false) {
+              uniqueVoterURLArray.push(voteArray[i].voter_url);
+              numberOfVoters++;
+            }
+          }
 
-      resultWrapper.append('<h3 class="option-title-display" id="' + decisionObject.optionsArray[i].id + '">' + decisionObject.optionsArray[i].title + '</h3><div class="progress progress-striped" style="margin-bottom: 9px;"><div class=' + divClass + ' style="width: ' + Math.round(determineProgressBarRank(rankValuesArray, decisionObject.optionsArray[i].total_rank)*statusBarIncrement) + '%"></div></div>');
 
-    }
+          var numberOfOptions = 0;
+          var uniqueOptionIdArray = [];
+          var optionObjectArray = [];
 
-  //this is the code to make the ajax call with update poll status every 1 second
-  setInterval(() => {
-    console.log('Refreshed');
-  }, 1000);
+          for (var i = 0; i < voteArray.length; i++) {
+            if (uniqueOptionIdArray.includes(voteArray[i].id) === false) {
+              var optionObject = {
+                option_id: voteArray[i].id,
+                title: voteArray[i].title,
+                total_rank: voteArray[i].total_rank
+              };
+              uniqueOptionIdArray.push(voteArray[i].id);
+              optionObjectArray.push(optionObject);
+              numberOfOptions++;
+            }
+          }
+
+          var statusBarIncrement = 100 / numberOfOptions;
+
+          $('.decision-admin-name-display').text(decisionObject.admin_name);
+          $('.decision-admin-email-display').text(decisionObject.admin_email);
+          $('.decision-title-display').text(decisionObject.decision_title);
+          $('.decision-message-display').text(decisionObject.message);
+
+          //passing the time remaining value to the clock being rendered on the page
+          var endtime = decisionObject.time - Math.round(Date.now()/60000);
+          var deadline = new Date(Date.parse(new Date()) + endtime * 60 * 1000);
+          initializeClock('clockdiv', deadline);
+
+          $('.voter-count').text(numberOfVoters);
+
+          var resultWrapper = $('#resultWrapper');
+          var rankValuesArray = [];
+
+          for (var i=0; i < optionObjectArray.length; i++) {
+            rankValuesArray.push(optionObjectArray[i].total_rank);
+            //console.log(rankValuesArray[i]);
+          }
+
+          for (var i=0; i < optionObjectArray.length; i++) {
+            console.log('Length of optionObjectArray is: ' + optionObjectArray.length);
+            console.log(optionObjectArray[i]);
+
+            var divClass = '"progress-bar progress-bar-info"';
+
+            if ((determineProgressBarRank(rankValuesArray, optionObjectArray[i].total_rank)) === numberOfOptions) {
+              console.log(optionObjectArray[i].title, (determineProgressBarRank(rankValuesArray, optionObjectArray[i].total_rank)));
+              divClass = '"progress-bar progress-bar-success"';
+            }
+
+            resultWrapper.append('<h3 class="option-title-display" id="' + optionObjectArray[i].id + '">' + optionObjectArray[i].title + '</h3><div class="progress progress-striped" style="margin-bottom: 9px;"><div class=' + divClass + ' style="width: ' + Math.round(determineProgressBarRank(rankValuesArray, optionObjectArray[i].total_rank)*statusBarIncrement) + '%"></div></div>');
+
+          }
+
+        //this is the code to make the ajax call with update poll status every 1 second
+        // setInterval(() => {
+        //   console.log('Refreshed');
+        // }, 1000);
+
+      });
+
+  // }, 1000);
+
 });

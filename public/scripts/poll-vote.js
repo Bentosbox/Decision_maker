@@ -130,10 +130,54 @@
 
   $( () => {
 
-    // $.ajax({
-    //   method: 'GET',
-    //   url: '/' + voterURL + '/json'
-    // }).done(function (voteChoices) {
+
+    $.ajax({
+      method: 'GET',
+      url: '/' + voterURL + '/json'
+    }).done(function (voteChoices) {
+
+      //Code to get the time remaining clock to work
+
+          function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60) % 60);
+            var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+              'total': t,
+              'days': days,
+              'hours': hours,
+              'minutes': minutes,
+              'seconds': seconds
+            };
+          }
+
+          function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var daysSpan = clock.querySelector('.days');
+            var hoursSpan = clock.querySelector('.hours');
+            var minutesSpan = clock.querySelector('.minutes');
+            var secondsSpan = clock.querySelector('.seconds');
+
+            function updateClock() {
+              var t = getTimeRemaining(endtime);
+
+              daysSpan.innerHTML = t.days;
+              hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+              minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+              secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+              if (t.total <= 0) {
+                clearInterval(timeinterval);
+              }
+            }
+
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
+          }
+
+      //Code to render the time remaining clock ends here
       var voteArray = [];
       console.log('Connection to server via ajax Get reuqest was successful');
       for (var i=0; i<voteChoices.length; i++) {
@@ -153,6 +197,12 @@
       $('.decision-admin-email-display').text(decisionObject.admin_email);
       $('.decision-title-display').text(decisionObject.decision_title);
       $('.decision-message-display').text(decisionObject.message);
+
+
+      //passing the time remaining value to the clock being rendered on the page
+      var endtime = decisionObject.time - Math.round(Date.now()/60000);
+      var deadline = new Date(Date.parse(new Date()) + endtime * 60 * 1000);
+      initializeClock('clockdiv', deadline);
 
         //Need to call a function from Ellen's JS files that will pass this value (which is current time (in seconds) - poll created time (in seconds) + poll length time (in seconds))
             // var timeLifeInSeconds = Math.round(Date.now()/1000) - decisionObject.time;
@@ -178,23 +228,29 @@
               decision_id: decisionObject.decision_id,
               option_id: Number(optionsList[i].id),
               rank: optionsList.length - i,
-              admin_url: decisionObject.admin_url
+              admin_url: decisionObject.admin_url,
+              admin_email: decisionObject.admin_email
             };
             pollObjectArray.push(pollObject);
           }
 
           //Send pollObjectArray to SERVER --- Discuss with Ben
 
-          // $.ajax({
-          //   url: '/polls/' + voterURL,
-          //   method: 'POST',
-          //   data: pollObjectArray // sending pollObjectArray to SERVER
-          // }).done({
-          //   console.log('ajax call for posting to /polls/' + voterURL + ' is a success');
-          //   window.location.href="/polls/result/" + decisionObject.admin_url;
-          // }).fail(function (err) {
-          //   console.log('failed');
-          // });
+          var pollObjectArrayInObject = {
+            pollObjectArray: pollObjectArray
+          }
+          console.log(pollObjectArrayInObject);
+
+          $.ajax({
+            url: '/polls/' + voterURL,
+            method: 'POST',
+            data: pollObjectArrayInObject // sending pollObjectArray to SERVER
+          }).done(function() {
+            console.log('ajax call for posting to /polls/' + voterURL + ' is a success'); // check if any code needs to be executed when ajax post is done
+            window.location.href="/polls/result/" + decisionObject.admin_url;
+          }).fail(function (err) {
+            console.log('failed');
+          });
 
 
           // var optionsList = document.getElementsByClassName('option-title-display');
@@ -203,7 +259,10 @@
           //   console.log(optionsList[i].id); // can get option_id value by setting the css id as the option_id value
           //   optionsList[i].innerText = 'Sample' + i; // this can set the value of Span tag
           // }
-    //     });
-    //
-    //
-    // });
+
+        });
+
+
+    });
+
+  });

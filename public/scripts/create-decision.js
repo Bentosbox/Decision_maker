@@ -123,7 +123,7 @@ $(() => {
           admin_url:      makeURL(),
           decision_title:          $('.decision-title').val(),
           message:        $('.decision-message').val(),
-          time:           $('.decision-time').val(), // Storing the poll create time (in seconds) + poll length time (in seconds)
+          time:           Math.round(Date.now()/60000) + (Number($('.decision-time').val())), // Storing the poll create time (in minutes) + poll length time (in minutes)
           optionsArray:   makeOptionsArray(),
           votersArray:    makeVotersArray()
         };
